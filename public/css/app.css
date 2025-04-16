@@ -1,0 +1,201 @@
+/*Global--------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 12pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+    position: relative;
+    padding-top: 60px;
+    z-index: 1; /* Ensure main content is above other elements */
+}
+
+body{
+    background-color: #f5f7fa;
+}
+/*Global--------------------------------------------*/
+
+/*Sidebar-------------------------------------------*/
+nav {
+    height: 60px;
+    background-color: black;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;;
+}
+
+nav h1 {
+    color: white;
+    position: absolute; /* Keep it centered in the nav */
+    left: 50%; /* Center horizontally */
+    top: 50%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Adjust for perfect centering */
+    margin: 0; /* Remove default margin */
+}
+
+.links-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav a {
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover {
+    background-color: blue;
+}
+
+nav .home-link {
+    margin-right: auto;
+}
+
+nav svg {
+    fill: white;
+}
+
+#sidebar-active {
+    display: none;
+}
+
+.open-sidebar-button,
+.close-sidebar-button {
+    display: none;
+}
+
+/* Always show the sidebar toggle button */
+.open-sidebar-button {
+    display: block;
+    padding: 20px;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+/* Sidebar styles (always active) */
+.links-container {
+ /* Hide by default */
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    z-index: 10;
+    width: 250px;
+    height: 100vh; /* Full height */
+    background-color: black;
+    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.25);
+    transition: 0.65s ease-in-out;
+}
+
+/* Show the sidebar when the checkbox is checked */
+#sidebar-active:checked ~ .links-container {
+    left: 0;
+}
+
+/* Close button inside the sidebar */
+.close-sidebar-button {
+    display: block;
+    padding: 20px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+/* Adjust link styles for the sidebar */
+.links-container a {
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    padding: 20px 30px;
+    justify-content: flex-start;
+}
+
+#sidebar-active:checked ~ #overlay{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+}
+
+.logout-link{
+    margin-top: auto;
+}
+/*Sidebar-------------------------------------------*/
+
+/*Dropdown------------------------------------------*/
+
+.dropdown{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown-content{
+    display: none;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    padding-left: 40px; /* Indent dropdown items */
+}
+
+.dropdown-content a:hover {
+    background-color: blue;
+    color: white;
+}
+
+.dropdown.active .dropdown-content {
+    display: block;
+}
+
+.dropdown > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown > a::after {
+    content: "▼";
+    font-size: 0.8em;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+.dropdown.active > a::after{
+    transform: rotate(180deg);
+}
+
+.dropdown.active > a, 
+.dropdown:hover > a {
+    background-color: blue;
+    color: white;
+}
+
+/*Dropdown------------------------------------------*/
