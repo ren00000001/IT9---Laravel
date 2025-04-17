@@ -360,7 +360,7 @@
                 <div class="toggle-panel toggle-left">
 
                     <div class="logo">
-                        <img src="{{ asset('/Logo2.png') }}" alt="Logo Picture">
+                        <img src="{{ asset('images/Logo2.png') }}" alt="Logo Picture">
                     </div>
                     <div class="company-name">MotoPOS</div>
 
@@ -373,7 +373,7 @@
                 <div class="toggle-panel toggle-right">
 
                     <div class="logo">
-                        <img src="{{ asset('/Logo2.png') }}" alt="Logo Picture">
+                        <img src="{{ asset('images/Logo2.png') }}" alt="Logo Picture">
                     </div>
                     <div class="company-name">MotoPOS</div>
 

@@ -18,76 +18,12 @@
             padding: 20px;
         }
 
-        .dropdown{
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .dropdown-content{
-            display: none;
-            background-color: #f9f9f9;
-            width: 100%;
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            padding-left: 40px; /* Indent dropdown items */
-        }
-
-        .dropdown-content a:hover {
-            background-color: blue;
-            color: white;
-        }
-
-        .dropdown.active .dropdown-content {
-            display: block;
-        }
-
-        .dropdown > a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .dropdown > a::after {
-            content: "▼";
-            font-size: 0.8em;
-            margin-left: 5px;
-            transition: transform 0.3s;
-        }
-
-        .dropdown.active > a::after{
-            transform: rotate(180deg);
-        }
-
-        .dropdown.active > a, 
-        .dropdown:hover > a {
-            background-color: blue;
-            color: white;
-        }
-
         .header{
             display: flex;
             justify-content: flex-end;
             align-items: center;
             margin-bottom: 20px;
             gap: 25px;
-        }
-
-        #real-time-display {
-            font-weight: bold;
-            margin-right: 15px;
-            padding: 5px 10px;
-            background-color: #f0f0f0;
-            border-radius: 4px;
-            font-size: 0.9rem;
         }
 
         .user-profile{

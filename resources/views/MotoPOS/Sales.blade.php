@@ -38,15 +38,6 @@
             gap: 25px;
         }
 
-        #real-time-display{
-            font-weight: bold;
-            margin-right: 15px;
-            padding: 5px 10px;
-            background-color: #f0f0f0;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
         .user-area{
             display: flex;
             align-items: center;
@@ -69,19 +60,6 @@
             justify-content: center;
             font-weight: bold;
             margin-right: 10px;
-        }
-
-        .page-header{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .page-title{
-            font-size: 24px;
-            font-weight: 600;
         }
 
         .card-container{
@@ -210,65 +188,50 @@
             font-weight: 600;
         }
 
-        table{
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.9em;
-            min-width: 400px;
-            border-radius: 5px 5px 0 0;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            table-layout: fixed
-        }
-
-        table th{
-            background-color: rgb(22, 22, 22);
-            color: white;
-            text-align: left;
-            font-weight: bold;
-            padding: 12px 15px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        table td{
-            padding: 12px 15px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        table tbody tr{
-            border-bottom: 1px solid rgb(153, 153, 153);
-        }
-
-        table tbody tr:last-of-type{
-            border-bottom: 2px solid rgb(22, 22, 22);
-        }
-
         .table-actions{
             display: flex;
+            gap: 5px;
         }
 
-        .table-action-btn{
+        .table-action-button{
             background: none;
             border: none;
             color: #7f8c8d;
             cursor: pointer;
             font-size: 16px;
+            gap: 6px;
         }
 
-        .table-action-btn:hover{
-            color: #3498db;
+        .table-action-button,
+        .delete.product-icon{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .delete-product-icon{
+            padding: 5px 5px;
+            width: 25px;
+            height: 25px;
+        }
+
+        .table-action-button:hover .delete-product-icon{
+            fill: red;
+        }
+
+        .table-action-button:hover{
+            transition: background-color 0.3s ease;
+        }
+
+        #table-deleteaction-button:hover{
+            background-color: rgba(255, 0, 0, 0.1);
         }
 
 
     </style>
 </head>
 <body>
-
+ 
     <header>
         <nav>
             <input type="checkbox" id="sidebar-active">
@@ -423,7 +386,9 @@
                                     <td>Gcash</td>
                                     <td>
                                         <div class="table-actions">
-                                            <button class="table-action-btn">Delete</button>
+                                            <button id="table-deleteaction-button" class="table-action-button">
+                                                <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -436,7 +401,7 @@
         </div>
     </main>
 
-    <script src="scriptForTime.js"></script>
+    <script src="{{ asset('js/scriptForTime.js') }}"></script>
     <script>
 
         const salesData = {

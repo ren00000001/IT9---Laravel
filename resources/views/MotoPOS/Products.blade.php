@@ -37,15 +37,6 @@
             gap: 25px;
         }
 
-        #real-time-display {
-            font-weight: bold;
-            margin-right: 15px;
-            padding: 5px 10px;
-            background-color: #f0f0f0;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
         .user-area {
             display: flex;
             align-items: center;
@@ -68,55 +59,6 @@
             justify-content: center;
             font-weight: bold;
             margin-right: 10px;
-        }
-
-        /* Center the search bar */
-        .search-bar {
-            text-align: center; /* Center the search bar content */
-            margin: 20px 0; /* Add spacing above and below the search bar */
-        }
-
-        .search-bar h3 {
-            margin-bottom: 10px; /* Add spacing below the "Search" heading */
-        }
-
-        .search-bar input {
-            width: 300px; /* Set a fixed width for the search input */
-            padding: 10px 15px 10px 40px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .search-container{
-            position: relative;
-            display: inline-block;
-        }
-
-        .search-icon{
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 25px;
-            height: 25px;
-            fill: #777;
-            pointer-events: none;
-            padding-bottom: 10px;
-        }
-
-        /* Adjust the page header */
-        .page-header {
-            display: flex;
-            justify-content: space-between; /* Align title and button horizontally */
-            align-items: center; /* Vertically center items */
-            margin-top: 20px; /* Add spacing above the page header */
-            margin-bottom: 20px;
-        }
-
-        .page-title {
-            font-size: 35px;
-            font-weight: 600;
         }
 
         .add-button{
@@ -246,44 +188,6 @@
         .view-option.active {
             background-color: rgba(52, 152, 219, 0.1);
             color: var(--primary);
-        }
-
-        table {
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.9em;
-            min-width: 400px;
-            border-radius: 5px 5px 0 0;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            table-layout: fixed; /* Ensures the table respects column widths */
-        }
-
-        table th {
-            background-color: rgb(22, 22, 22); /* Keep the header background color */
-            color: white; /* Keep the header text color */
-            text-align: left;
-            font-weight: bold;
-            padding: 12px 15px;
-            white-space: nowrap; /* Prevents text from wrapping */
-            overflow: hidden; /* Hides overflow content */
-            text-overflow: ellipsis; /* Adds an ellipsis (...) for overflow text */
-        }
-
-        table td {
-            padding: 12px 15px;
-            white-space: nowrap; /* Prevents text from wrapping */
-            overflow: hidden; /* Hides overflow content */
-            text-overflow: ellipsis; /* Adds an ellipsis (...) for overflow text */
-        }
-
-        table tbody tr {
-            border-bottom: 1px solid rgb(153, 153, 153);
-        }
-
-        table tbody tr:last-of-type {
-            border-bottom: 2px solid rgb(22, 22, 22);
         }
 
         .product-id {
@@ -882,7 +786,6 @@
     </main>
 
     <script src="{{ asset('js/scriptForTime.js') }}"></script>
-    <script src="{{ asset('js/supplierfortoggle.js') }}"></script>
 
     <script>
  // Image preview functionality for both forms
