@@ -45,6 +45,27 @@
             margin-right: 10px;
         }
 
+        .nav-logo {
+            width: 60px;
+            height: 60px;
+            margin: 20px auto;
+            display: block;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+
+        .nav-logo img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 <body>
@@ -61,6 +82,10 @@
                 <label for="sidebar-active" class="close-sidebar-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
+
+                <div class="nav-logo">
+                    <img src="{{ asset('images/TurboParts3.png') }}" alt="">
+                </div>
     
                 <a class="home-link" href="{{ route('dashboard') }}">Home</a>
                 <a href="{{ route('products') }}">Products</a>

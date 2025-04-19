@@ -17,39 +17,39 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', function () {
-    return view('MotoPOS.Login');
+    return view('TurboParts.Login');
 })->name('login');
 
 Route::get('/dashboard', function(){
-    return view('MotoPOS.Dashboard');
+    return view('TurboParts.Dashboard');
 })->name('dashboard');
 
 Route::get('/products', function(){
-    return view('MotoPOS.Products');
+    return view('TurboParts.Products');
 })->name('products');
 
 Route::get('/customers', function () {
-    return view('MotoPOS.Customers');
+    return view('TurboParts.Customers');
 })->name('customers');
 
 Route::get('/invetory', function () {
-    return view('MotoPOS.Inventory');
+    return view('TurboParts.Inventory');
 })->name('inventory');
 
 Route::get('/supplier', function () {
-    return view('MotoPOS.Supplier');
+    return view('TurboParts.Supplier');
 })->name('supplier');
  
 Route::get('/sales', function () {
-    return view('MotoPOS.Sales');
+    return view('TurboParts.Sales');
 })->name('sales');
 
 Route::get('/archives', function () {
-    return view('MotoPOS.Archives');
+    return view('TurboParts.Archives');
 })->name('archives');
 
 Route::get('/settings', function(){
-    return view('MotoPOS.Settings');
+    return view('TurboParts.Settings');
 })->name('settings');
 
 Route::post('/', [AuthController::class, 'logout']
