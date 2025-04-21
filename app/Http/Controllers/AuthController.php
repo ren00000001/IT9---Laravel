@@ -64,6 +64,43 @@ class AuthController extends Controller
         //
     }
 
+    public function login(Request $request){
+
+        /*$credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);*/
+        
+        $userRole = $request->input('user_role');
+
+        switch($userRole){
+            case 'cashier':
+                return redirect()->route('cashier.dashboard');
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+            default: 
+                return redirect('login');
+        }
+
+        /*if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
+
+            switch($userRole){
+                case 'cashier':
+                    return redirect()->route('TurboParts.Cashier.Dashboard');
+                case 'admin':
+                    return redirect()->route('TurboParts.Admin.Dasboard');
+            }
+        }*/
+
+        /*return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->withInput($request->except('password'));*/
+
+       
+
+    }
+
     public function logout(Request $request){
         Auth::logout();
 
@@ -74,4 +111,5 @@ class AuthController extends Controller
         return redirect('/');
 
     }
+
 }

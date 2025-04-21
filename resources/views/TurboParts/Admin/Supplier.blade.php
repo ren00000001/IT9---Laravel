@@ -3,37 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MotoPOS - Inventory</title>
+    <title>Supplier</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-        :root {
-            --primary: #3498db;
-            --foricon: #222121;
-            --addbtn: rgb(231, 197, 6);
-            --secondary: #2ecc71;
-            --danger: #e74c3c;
-            --dark: #34495e;
-            --light: #ecf0f1;
-            --text: #2c3e50;
-        }
 
-        .container {
+        .container{
             display: flex;
             min-height: 100vh;
         }
 
-        .main-container {
+        .main-content{
             flex: 1;
-            padding: 20px;
+            padding: 20px
         }
 
-        /* Keep the user icon in the top-right corner */
-        .header {
+        .header{
             display: flex;
-            justify-content: flex-end; /* Align user-area to the right */
-            align-items: center; /* Vertically center items */
-            margin-bottom: 20px; /* Add spacing below the header */
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 20px;
             gap: 25px;
         }
 
@@ -52,7 +41,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: var(--foricon);
+            background-color: black;
             color: white;
             display: flex;
             align-items: center;
@@ -60,43 +49,7 @@
             font-weight: bold;
             margin-right: 10px;
         }
-        
-        .supplier-button{
-            display: flex;
-            justify-content: flex-end;
-        }
 
-        #supplier-button{
-            background-color: green;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s
-        }
-
-        .add-button{
-            display: flex;
-            justify-content: flex-end;
-            margin: 15px;
-        }
-
-        #add-button {
-            background-color: var(--addbtn);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s
-        }
-
-        #add-button:hover{
-            background-color: goldenrod;
-        }
         /* Rest of your CSS styles */
         .filter-section {
             background-color: white;
@@ -143,7 +96,7 @@
             cursor: pointer;
             margin-left: auto;
             transition: all 0.3s ease; 
-            padding: 8px 15px 10px 12px;   
+            padding: 8px 15px 10px 12px;
         }
 
         .filter-button:hover{
@@ -159,21 +112,48 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            width: 25px;
+            height: 25px;
         }
 
         .filter-product-icon{
             width: 20px;
             height: 20px;
             fill: white;
-            transition: fill 0.3 ease;
+            transition: fill 0.3s ease;
         }
 
-        .filter-product-icon{
+        .add-button{
+            display: flex;
+            justify-content: flex-end;
+            margin: 15px;
+        }
+
+        #add-button{
+            display: flex;
+           align-items: center;
+           justify-content: center;
+           gap: 8px;
+           background-color: green;
+           color: white;
+           border: none;
+           border-radius: 5px;
+           padding: 10px 15px;
+           font-size: 14px;
+           cursor: pointer;
+           transition: 0.3s;
+        }
+
+        #add-button:hover{
+            background-color: rgb(25, 99, 25);
+        }
+
+        .add-product-icon{
             width: 25px;
             height: 25px;
         }
 
-        .stocks-table-container {
+        .supplier-table-container {
             background-color: white;
             border-radius: 10px;
             padding: 20px;
@@ -193,49 +173,6 @@
             font-weight: 600;
         }
 
-        .view-options {
-            display: flex;
-            align-items: center;
-        }
-
-        .view-option {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .view-option.active {
-            background-color: rgba(52, 152, 219, 0.1);
-            color: var(--primary);
-        }
-
-        .product-id {
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-        }
-
-        .status-in-stock {
-            background-color: rgba(46, 204, 113, 0.1);
-            color: var(--secondary);
-        }
-
-        .status-out-of-stock {
-            background-color: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
-        }
-
         .table-actions {
             display: flex;
             gap: 5px;
@@ -250,13 +187,11 @@
             gap: 6px;
         }
 
-        .table-action-button:hover .edit-product-icon,
-        .action-button:hover .edit-product-icon{
+        .table-action-button:hover .edit-product-icon{
             fill:goldenrod;
         }
 
-        .table-action-button:hover .delete-product-icon,
-        .action-button:hover .delete-product-icon{
+        .table-action-button:hover .delete-product-icon{
             fill: red;
         }
 
@@ -300,12 +235,14 @@
         #table-deleteaction-button:hover{
             background-color: rgba(255, 0, 0, 0.1);
         }
+
+
     </style>
 </head>
 <body>
 
     <header>
-        <nav>
+    <nav>
             <input type="checkbox" id="sidebar-active">
             <label for="sidebar-active" class="open-sidebar-button">
                 <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
@@ -317,14 +254,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
     
-                <a class="home-link" href="{{ route('dashboard') }}">Home</a>
-                <a href="{{ route('products') }}">Products</a>
-                <a href="{{ route('customers') }}">Customers</a>
-                <a href="{{ route('inventory') }}">Inventory</a>
-                <a href="{{ route('supplier') }}">Supplier</a>
-                <a href="{{ route('sales') }}">Sales</a>
-                <a href="{{ route('archives') }}">Archives</a>
-                <a href="{{ route('settings') }}">Settings</a>
+                <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
+                <a href="{{ route('admin.products') }}">Products</a>
+                <a href="{{ route('admin.customers') }}">Customers</a>
+                <a href="{{ route('admin.inventory') }}">Inventory</a>
+                <a href="{{ route('admin.supplier') }}">Supplier</a>
+                <a href="{{ route('admin.sales') }}">Sales</a>
+                <a href="{{ route('admin.archives') }}">Archives</a>
+                <a href="{{ route('admin.settings') }}">Settings</a>
                 <!-- Move the Log out link to the bottom -->
                 <a class="logout-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -341,8 +278,8 @@
 
     <main>
         <div class="container">
-            <div class="main-container">
-                <!-- Header with user icon in the top-right corner -->
+            <div class="main-content">
+
                 <div class="header">
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
@@ -354,20 +291,17 @@
                     </div>
                 </div>
 
-                <!-- Search Bar -->
                 <div class="search-bar">
                     <div class="search-container">
                         <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                     </div>
-                    <input type="text" placeholder="Enter Product's info to search">
+                    <input type="text" placeholder="Enter Supplier's info to search">
                 </div>
 
-                <!-- Page Header -->
                 <div class="page-header">
-                    <h1 class="page-title">Inventory</h1>
+                    <h1 class="page-title">Supplier</h1>
                 </div>
 
-                <!-- Filter Section -->
                 <div class="filter-section">
                     <div class="filter-row">
                         <div class="filter-group">
@@ -389,20 +323,22 @@
                         </div>
 
                         <button class="filter-button">
-                            <svg class="filter-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg>                            
+                            <svg class="filter-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg>
                             Apply Filters
                         </button>
                     </div>
                 </div>
 
                 <div class="add-button">
-                    <button id="add-button">Add New Product's Category</button>
+                    <button id="add-button">
+                        <svg class="add-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                        Add Supply
+                    </button>
                 </div>
 
-                <!-- Stocks Table -->
-                <div class="stocks-table-container">
+                <div class="supplier-table-container">
                     <div class="table-header">
-                        <div class="class-title">Stocks</div>
+                        <div class="class-title">Supplier</div>
                     </div>
 
                     <div class="table-responsive">
@@ -446,9 +382,9 @@
                         </table>
                     </div>
 
-                </div>
             </div>
         </div>
+           
     </main>
 
     <script src="{{ asset('js/scriptForTime.js') }}"></script>

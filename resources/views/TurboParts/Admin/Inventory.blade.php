@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MotoPOS - Archives</title>
+    <title>MotoPOS - Inventory</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-
         :root {
             --primary: #3498db;
             --foricon: #222121;
+            --addbtn: rgb(231, 197, 6);
             --secondary: #2ecc71;
             --danger: #e74c3c;
             --dark: #34495e;
@@ -18,35 +18,41 @@
             --text: #2c3e50;
         }
 
-         .container{
+        .container {
             display: flex;
             min-height: 100vh;
         }
 
-        .main-content{
+        .main-container {
             flex: 1;
             padding: 20px;
         }
 
-        .header{
+        /* Keep the user icon in the top-right corner */
+        .header {
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 20px;
+            justify-content: flex-end; /* Align user-area to the right */
+            align-items: center; /* Vertically center items */
+            margin-bottom: 20px; /* Add spacing below the header */
             gap: 25px;
         }
 
-        .user-profile{
+        .user-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
             display: flex;
             align-items: center;
             cursor: pointer;
-        }  
-        
-        .user-avatar{
+        }
+
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: black;
+            background-color: var(--foricon);
             color: white;
             display: flex;
             align-items: center;
@@ -55,7 +61,44 @@
             margin-right: 10px;
         }
         
-        .filter-section{
+        .supplier-button{
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #supplier-button{
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s
+        }
+
+        .add-button{
+            display: flex;
+            justify-content: flex-end;
+            margin: 15px;
+        }
+
+        #add-button {
+            background-color: var(--addbtn);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s
+        }
+
+        #add-button:hover{
+            background-color: goldenrod;
+        }
+        /* Rest of your CSS styles */
+        .filter-section {
             background-color: white;
             border-radius: 10px;
             padding: 20px;
@@ -63,31 +106,31 @@
             margin-bottom: 20px;
         }
 
-        .filter-row{
+        .filter-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 15px;
         }
 
-        .filter-group{
+        .filter-group {
             display: flex;
-            align-items: center;        
+            align-items: center;
         }
 
-        .filter-label{
+        .filter-label {
             margin-right: 10px;
             font-weight: 500;
         }
 
-        .filter-input{
+        .filter-input {
             padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
         }
 
-        .filter-button{
+        .filter-button {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -113,16 +156,24 @@
         }
 
         .filter-product-icon{
-            width: 25px;
-            height: 25px;
-            fill: white;
-            transition: fill 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
-        .archives-table-container{
+        .filter-product-icon{
+            width: 20px;
+            height: 20px;
+            fill: white;
+            transition: fill 0.3 ease;
+        }
+
+        .filter-product-icon{
+            width: 25px;
+            height: 25px;
+        }
+
+        .stocks-table-container {
             background-color: white;
             border-radius: 10px;
             padding: 20px;
@@ -130,16 +181,59 @@
             margin-bottom: 30px;
         }
 
-        .table-header{
+        .table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px; 
+            margin-bottom: 15px;
         }
 
-        .table-title{
+        .class-title {
             font-size: 18px;
             font-weight: 600;
+        }
+
+        .view-options {
+            display: flex;
+            align-items: center;
+        }
+
+        .view-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .view-option.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--primary);
+        }
+
+        .product-id {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .status-in-stock {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--secondary);
+        }
+
+        .status-out-of-stock {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
         }
 
         .table-actions {
@@ -156,13 +250,25 @@
             gap: 6px;
         }
 
+        .table-action-button:hover .edit-product-icon,
+        .action-button:hover .edit-product-icon{
+            fill:goldenrod;
+        }
+
+        .table-action-button:hover .delete-product-icon,
+        .action-button:hover .delete-product-icon{
+            fill: red;
+        }
+
         .table-action-button,
+        .edit-product-icon,
         .delete-product-icon{
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
+        .edit-product-icon,
         .delete-product-icon{
             padding: 5px 5px;
         }
@@ -173,18 +279,27 @@
             height: 25px;
         }
 
-        .table-action-button:hover .delete-product-icon{
-            fill: red;
+        #edit-action-button:hover{
+            background-color: rgba(242, 210, 32, 0.2);
+            color: goldenrod;
+        }
+
+        #delete-action-button:hover{
+            background-color: rgba(255, 0, 0, 0.1);
+            color: red;
         }
 
         .table-action-button:hover{
             transition: background-color 0.3s ease;
         }
 
+        #table-editaction-button:hover{
+            background-color: rgba(242, 210, 32, 0.2);
+        }
+
         #table-deleteaction-button:hover{
             background-color: rgba(255, 0, 0, 0.1);
         }
-
     </style>
 </head>
 <body>
@@ -202,14 +317,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
     
-                <a class="home-link" href="{{ route('dashboard') }}">Home</a>
-                <a href="{{ route('products') }}">Products</a>
-                <a href="{{ route('customers') }}">Customers</a>
-                <a href="{{ route('inventory') }}">Inventory</a>
-                <a href="{{ route('supplier') }}">Supplier</a>
-                <a href="{{ route('sales') }}">Sales</a>
-                <a href="{{ route('archives') }}">Archives</a>
-                <a href="{{ route('settings') }}">Settings</a>
+                <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
+                <a href="{{ route('admin.products') }}">Products</a>
+                <a href="{{ route('admin.customers') }}">Customers</a>
+                <a href="{{ route('admin.inventory') }}">Inventory</a>
+                <a href="{{ route('admin.supplier') }}">Supplier</a>
+                <a href="{{ route('admin.sales') }}">Sales</a>
+                <a href="{{ route('admin.archives') }}">Archives</a>
+                <a href="{{ route('admin.settings') }}">Settings</a>
                 <!-- Move the Log out link to the bottom -->
                 <a class="logout-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -223,12 +338,11 @@
             <h1>OKE</h1>
         </nav>
     </header>
-    
+
     <main>
-
         <div class="container">
-            <div class="main-content">
-
+            <div class="main-container">
+                <!-- Header with user icon in the top-right corner -->
                 <div class="header">
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
@@ -240,48 +354,55 @@
                     </div>
                 </div>
 
+                <!-- Search Bar -->
                 <div class="search-bar">
                     <div class="search-container">
                         <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                     </div>
-                    <input type="text" placeholder="Search Archives">
+                    <input type="text" placeholder="Enter Product's info to search">
                 </div>
 
+                <!-- Page Header -->
                 <div class="page-header">
-                    <h1 class="page-title">Archives</h1>
+                    <h1 class="page-title">Inventory</h1>
                 </div>
 
+                <!-- Filter Section -->
                 <div class="filter-section">
                     <div class="filter-row">
-
                         <div class="filter-group">
-                            <span class="filter-label">Group:</span>
+                            <span class="filter-label">Category:</span>
                             <select class="filter-input">
-                                <option>All</option>
+                                <option>All Categories</option>
                                 <option>OKE</option>
-                                <option>dele oke</option>
+                                <option>NOT OKE</option>
                             </select>
                         </div>
 
                         <div class="filter-group">
-                            <span class="filter-label">Status:</span>
+                            <span class="filter-label">Stock:</span>
                             <select class="filter-input">
                                 <option>All</option>
-                                <option>Expired</option>
-                                <option>Available</option>
+                                <option>OKE</option>
+                                <option>NOT OKE</option>
                             </select>
                         </div>
 
                         <button class="filter-button">
-                            <svg class="filter-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg>
+                            <svg class="filter-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg>                            
                             Apply Filters
                         </button>
                     </div>
                 </div>
 
-                <div class="archives-table-container">
+                <div class="add-button">
+                    <button id="add-button">Add New Product's Category</button>
+                </div>
+
+                <!-- Stocks Table -->
+                <div class="stocks-table-container">
                     <div class="table-header">
-                        <div class="class-title">Product</div>
+                        <div class="class-title">Stocks</div>
                     </div>
 
                     <div class="table-responsive">
@@ -290,107 +411,47 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Product's Name</th>
-                                    <th>Date Deleted</th>
-                                    <th>Action</th>
+                                    <th>Stocks</th>
+                                    <th>Stock-In</th>
+                                    <th>Date Last Stock-In</th>
+                                    <th>Stock-Out</th>
+                                    <th>Date Last Stock-Out</th>
+                                    <th>Supplier</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>fgdfgd</td>
-                                    <td>gfdsgfd</td>
-                                    <td>sdfgsdfg</td>
+                                    <td>gauikrgia</td>
+                                    <td>zfdhughuzd</td>
+                                    <td>zfdhughuzd</td>
+                                    <td>fzjhfdk</td>
+                                    <td>fkjZfigS</td>
+                                    <td>gdfugSf</td>
+                                    <td>fkhjhLD</td>
+                                    <td>zgjfi</td>
                                     <td>
                                         <div class="table-actions">
+                                            <button id="table-editaction-button" class="table-action-button">
+                                                <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+                                            </button>
+
                                             <button id="table-deleteaction-button" class="table-action-button">
                                                 <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
-                                            </button> 
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+
                 </div>
-
-                <!---------------------------------------------------->
-
-                <div class="archives-table-container">
-                    <div class="table-header">
-                        <div class="class-title">Costumer</div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Costumer's Name</th>
-                                    <th>Date Deleted</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>fgdfgd</td>
-                                    <td>gfdsgfd</td>
-                                    <td>sdfgsdfg</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button id="table-deleteaction-button" class="table-action-button">
-                                                <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
-                                            </button>                                       
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!---------------------------------------------------->
-
-                <div class="archives-table-container">
-                    <div class="table-header">
-                        <div class="class-title">Supplier</div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Supplier's Name</th>
-                                    <th>Date Deleted</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>fgdfgd</td>
-                                    <td>gfdsgfd</td>
-                                    <td>sdfgsdfg</td>
-                                    <td>
-                                        <div class="table-actions">
-                                            <button id="table-deleteaction-button" class="table-action-button">
-                                                <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
-                                            </button>                                         
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!---------------------------------------------------->
-
             </div>
         </div>
-
-       
     </main>
 
-    <script src=" {{ asset('js/scriptForTime.js') }}"></script>
-    
+    <script src="{{ asset('js/scriptForTime.js') }}"></script>
+
 </body>
 </html>

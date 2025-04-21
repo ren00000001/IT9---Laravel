@@ -34,7 +34,7 @@ body{
 /*Sidebar-------------------------------------------*/
 nav {
     height: 60px;
-    background-color: black;
+    background-color: goldenrod;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -46,7 +46,7 @@ nav {
 }
 
 nav h1 {
-    color: white;
+    color: #222;
     position: absolute; /* Keep it centered in the nav */
     left: 50%; /* Center horizontally */
     top: 50%; /* Center vertically */
@@ -68,11 +68,13 @@ nav a {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: white;
+    color: #222;
+    font-weight: 600;
 }
 
 nav a:hover {
-    background-color: blue;
+    background-color: #222;
+    color: white;
 }
 
 nav .home-link {
@@ -83,6 +85,27 @@ nav svg {
     fill: white;
 }
 
+.nav-logo {
+    width: 60px;
+    height: 60px;
+    margin: 10px auto 20px auto;
+    display: block;
+    background-color: #e7e5e5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: 2px solid #e0e0e0;
+}
+
+.nav-logo img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
 #sidebar-active {
     display: none;
 }
@@ -90,12 +113,13 @@ nav svg {
 .open-sidebar-button,
 .close-sidebar-button {
     display: none;
+    background-color: #222;
 }
 
 /* Always show the sidebar toggle button */
 .open-sidebar-button {
     display: block;
-    padding: 20px;
+    padding: 12.3px;
     cursor: pointer;
     margin-right: auto;
 }
@@ -111,7 +135,7 @@ nav svg {
     z-index: 10;
     width: 250px;
     height: 100vh; /* Full height */
-    background-color: black;
+    background-color: goldenrod;
     box-shadow: 5px 0 5px rgba(0, 0, 0, 0.25);
     transition: 0.65s ease-in-out;
 }
@@ -124,18 +148,29 @@ nav svg {
 /* Close button inside the sidebar */
 .close-sidebar-button {
     display: block;
-    padding: 20px;
+    padding: 12.3px;
     cursor: pointer;
     align-self: flex-end;
 }
 
 /* Adjust link styles for the sidebar */
 .links-container a {
+    position: relative;
     box-sizing: border-box;
     height: auto;
     width: 100%;
     padding: 20px 30px;
     justify-content: flex-start;
+}
+
+.links-container a::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20px; /* Adjust this to move the border from the left */
+    right: 20px; /* Adjust this to move the border from the right */
+    height: 1px; /* Border thickness */
+    background-color: rgba(0,0,0); /* Border color - subtle gray */ 
 }
 
 #sidebar-active:checked ~ #overlay{

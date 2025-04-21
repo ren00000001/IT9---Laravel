@@ -235,23 +235,28 @@
     <header>
         <nav>
             <input type="checkbox" id="sidebar-active">
-            <label for="sidebar-active" class="open-sidebar-button">
-                <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
-            </label>
+                <label for="sidebar-active" class="open-sidebar-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                </label>
 
             <label for="sidebar-active" id="overlay"></label>
             <div class="links-container">
                 <label for="" class="close-sidebar-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
-                <a class="home-link" href="{{ route('dashboard') }}">Home</a>
-                <a href="{{ route('products') }}">Products</a>
-                <a href="{{ route('customers') }}">Customers</a>
-                <a href="{{ route('inventory') }}">Inventory</a>
-                <a href="{{ route('supplier') }}">Supplier</a>
-                <a href="{{ route('sales') }}">Sales</a>
-                <a href="{{ route('archives') }}">Archives</a>
-                <a href="{{ route('settings') }}">Settings</a>
+
+                <div class="nav-logo">
+                    <img src="{{ asset('images/TurboParts3.png') }}" alt="">
+                </div>
+                
+                <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
+                <a href="{{ route('admin.products') }}">Products</a>
+                <a href="{{ route('admin.customers') }}">Customers</a>
+                <a href="{{ route('admin.inventory') }}">Inventory</a>
+                <a href="{{ route('admin.supplier') }}">Supplier</a>
+                <a href="{{ route('admin.sales') }}">Sales</a>
+                <a href="{{ route('admin.archives') }}">Archives</a>
+                <a href="{{ route('admin.settings') }}">Settings</a>
                 <!-- Move the Log out link to the bottom -->
                 <a class="logout-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
