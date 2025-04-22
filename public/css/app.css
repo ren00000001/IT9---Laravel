@@ -233,8 +233,8 @@ nav svg {
 }
 
 table th {
-    background-color: rgb(22, 22, 22); /* Keep the header background color */
-    color: white; /* Keep the header text color */
+    background-color: goldenrod; /* Keep the header background color */
+    color: #222; /* Keep the header text color */
     text-align: left;
     font-weight: bold;
     padding: 12px 15px;
