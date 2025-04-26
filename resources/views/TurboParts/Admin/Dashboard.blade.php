@@ -54,12 +54,18 @@
         }
         
         .card{
-            background-color: white;
-            border-radius: 0.35rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+            border-radius: 8px;
             box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
             overflow: hidden;
             min-width: 250px;
             height: 120px;
+            transition:  all 0.3 ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
         }
 
         .card-body{
@@ -80,30 +86,50 @@
         .stat-value{
             font-size: 27px;
             font-weight: 700;
-            color: #222;
+            color: var(--gunmetal);
             flex-shrink: 0;
             margin-right: 1rem
         }
 
         .stat-label{
             font-size: 20px;
-            color: #858769;
+            color: #6c757d;
             text-align: right;
             white-space: nowrap;
             font-weight: 600;
         }
 
-        .primary { background-color: #e6f7ff; border-left: 4px solid #1890ff; }
-        .success { background-color: #f6ffed; border-left: 4px solid #52c41a; }
-        .warning { background-color: #fffbe6; border-left: 4px solid #faad14; }
-        .danger { background-color: #ffebe6; border-left: 4px solid #f76808;}
+        .primary { 
+            background: linear-gradient(135deg, #f0f2f5 0%, #e4e7eb 100%);
+            border-left: 4px solid var(--steel);
+            box-shadow: inset 2px 0 3px rgba(142, 158, 171, 0.3);
+        }
+
+        .success { 
+            background: linear-gradient(135deg, #f5f7f0 0%, #e8ebdf 100%);
+            border-left: 4px solid var(--chrome);
+            box-shadow: inset 2px 0 3px rgba(192, 192, 192, 0.4);
+        }
+
+        .warning { 
+            background: linear-gradient(135deg, #f7f5f0 0%, #ebe7df 100%);
+            border-left: 4px solid var(--brass);
+            box-shadow: inset 2px 0 3px rgba(181, 166, 66, 0.3);
+        }
+
+        .danger { 
+            background: linear-gradient(135deg, #f5f0f0 0%, #ebdfdf 100%);
+            border-left: 4px solid var(--copper);
+            box-shadow: inset 2px 0 3px rgba(184, 115, 51, 0.3);
+        }
 
         .dashboard-table-container{
-            background-color: white;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             margin-bottom: 30px;
+            overflow: hidden;
         }
 
         .table-header{
@@ -111,14 +137,16 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 10px;
         }
 
         .table-title{
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
+            color: var(--gunmetal);
+            position: relative;
         }
-
-
 
     </style>
 </head>
@@ -169,6 +197,33 @@
             <div class="main-content">
 
                 <div class="header">
+                    
+                <!--POPUP INFO------------------------------------------------>
+                    <div class="popup-trigger" id="popup_svgtrigger">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+                            <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                        </svg>
+                    </div>
+
+                        <div class="popup-overlay" id="popup">
+                            <div class="popup-content">
+                                <button class="close-btn" aria-label="Close">&times;</button>
+                                <h2>Important Information</h2>
+                                <p>This is your pop-up content. You can put any HTML here including:</p>
+                                <ul>
+                                    <li>Text paragraphs</li>
+                                    <li>Images</li>
+                                    <li>Forms</li>
+                                    <li>Videos</li>
+                                </ul>
+                                <p>The modal will close when you click outside, press Escape, or click the close button.</p>
+                                <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+                                    <small>You can customize this content as needed.</small>
+                                </div>
+                            </div>
+                        </div>
+                    <!--POPUP INFO------------------------------------------------>
+
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
                     <div class="user-area">
@@ -177,6 +232,7 @@
                             <span>Ren Indino</span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="page-header">
@@ -201,7 +257,7 @@
                     <div class="card stat-card warning">
                         <div class="card-body">
                             <div class="stat-value">1,234</div>
-                            <div class="stat-label">Products Sold</div>
+                            <div class="stat-label">Total Orders</div>
                         </div>
                     </div>
 
@@ -256,6 +312,7 @@
 
     <script src="{{ asset('js/scriptForTime.js') }}"></script>
     <script src="{{ asset('js/supplierfortoggle.js') }}"></script>
+    <script src="{{ asset('js/Popup.js') }}"></script>
 
 </body>
 </html>

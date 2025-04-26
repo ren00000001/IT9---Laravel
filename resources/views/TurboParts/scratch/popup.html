@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop-up Modal Example</title>
+    <style>
+        /* Popup trigger styles */
+        .popup-trigger {
+            cursor: pointer;
+            margin: 20px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        
+        .popup-trigger:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Button style example */
+        #button-trigger {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        /* Popup overlay */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        
+        /* Popup content box */
+        .popup-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 80%;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.3s;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #888;
+            background: none;
+            border: none;
+            padding: 0 10px;
+        }
+        
+        .close-btn:hover {
+            color: #ff0000;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Content styling */
+        .popup-content h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .popup-content p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .popup-content {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Pop-up Modal Demo</h1>
+        
+        <!-- Trigger elements -->
+        <button class="popup-trigger" id="button-trigger">Click Me</button>
+        
+        <div class="popup-trigger" id="svg-trigger" title="Information">
+            <svg width="50" height="50" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" fill="#2196F3"/>
+                <text x="12" y="16" text-anchor="middle" fill="white" font-size="12" font-weight="bold">i</text>
+            </svg>
+        </div>
+        
+        <img src="https://via.placeholder.com/50" alt="Info" class="popup-trigger" id="image-trigger" width="50" title="Click for info">
+
+        <!-- The pop-up modal -->
+        <div class="popup-overlay" id="popup">
+            <div class="popup-content">
+                <button class="close-btn" aria-label="Close">&times;</button>
+                <h2>Important Information</h2>
+                <p>This is your pop-up content. You can put any HTML here including:</p>
+                <ul>
+                    <li>Text paragraphs</li>
+                    <li>Images</li>
+                    <li>Forms</li>
+                    <li>Videos</li>
+                </ul>
+                <p>The modal will close when you click outside, press Escape, or click the close button.</p>
+                <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+                    <small>You can customize this content as needed.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all trigger elements
+            const triggers = document.querySelectorAll('.popup-trigger');
+            const popup = document.getElementById('popup');
+            const closeBtn = document.querySelector('.close-btn');
+            const body = document.body;
+            
+            // Function to open popup
+            function openPopup() {
+                popup.style.display = 'flex';
+                body.style.overflow = 'hidden';
+                popup.setAttribute('aria-hidden', 'false');
+            }
+            
+            // Function to close popup
+            function closePopup() {
+                popup.style.display = 'none';
+                body.style.overflow = 'auto';
+                popup.setAttribute('aria-hidden', 'true');
+            }
+            
+            // Add click event to all triggers
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', openPopup);
+                
+                // Add keyboard support for button triggers
+                if (trigger.tagName === 'BUTTON') {
+                    trigger.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            openPopup();
+                        }
+                    });
+                }
+            });
+            
+            // Close when clicking close button
+            closeBtn.addEventListener('click', closePopup);
+            
+            // Close when clicking outside the popup content
+            popup.addEventListener('click', function(e) {
+                if (e.target === popup) {
+                    closePopup();
+                }
+            });
+            
+            // Close with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && popup.style.display === 'flex') {
+                    closePopup();
+                }
+            });
+            
+            // Focus trap for accessibility
+            popup.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab' && popup.style.display === 'flex') {
+                    const focusableElements = popup.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+                    
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstElement) {
+                            lastElement.focus();
+                            e.preventDefault();
+                        }
+                    } else {
+                        if (document.activeElement === lastElement) {
+                            firstElement.focus();
+                            e.preventDefault();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

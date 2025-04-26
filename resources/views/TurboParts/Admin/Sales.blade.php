@@ -168,6 +168,25 @@
             margin-bottom: 15px;
         }
 
+        .viewhistory-button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--secondbtn);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .viewhistory-button:hover{
+            background-color: var(--hoverbtn);
+        }
+
         .recentsales-table-container{
             background-color: white;
             border-radius: 10px;
@@ -203,7 +222,7 @@
         }
 
         .table-action-button,
-        .delete.product-icon{
+        .delete-product-icon{
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -267,7 +286,7 @@
                         @csrf
                     </form>
             </div>
-            <h1>OKE</h1>
+            <h1>TurboParts</h1>
         </nav>
     </header>
 
@@ -276,6 +295,33 @@
             <div class="main-content">
 
                 <div class="header">
+
+                <!--POPUP INFO------------------------------------------------>
+                    <div class="popup-trigger" id="popup_svgtrigger">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+                            <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                        </svg>
+                    </div>
+
+                        <div class="popup-overlay" id="popup">
+                            <div class="popup-content">
+                                <button class="close-btn" aria-label="Close">&times;</button>
+                                <h2>Important Information</h2>
+                                <p>This is your pop-up content. You can put any HTML here including:</p>
+                                <ul>
+                                    <li>Text paragraphs</li>
+                                    <li>Images</li>
+                                    <li>Forms</li>
+                                    <li>Videos</li>
+                                </ul>
+                                <p>The modal will close when you click outside, press Escape, or click the close button.</p>
+                                <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+                                    <small>You can customize this content as needed.</small>
+                                </div>
+                            </div>
+                        </div>
+                <!--POPUP INFO------------------------------------------------>
+
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
                     <div class="user-area">
@@ -364,6 +410,10 @@
                 <div class="recentsales-table-container">
                     <div class="table-header">
                         <div class="table-title">Recent Purchase</div>
+                        <a href="{{ route('admin.viewhistory') }}" style="text-decoration: none;">
+                            <button class="viewhistory-button">Full History<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                            </button>
+                        </a>
                     </div>
 
                     <div class="table-responsive">
@@ -407,6 +457,7 @@
     </main>
 
     <script src="{{ asset('js/scriptForTime.js') }}"></script>
+    <script src="{{ asset('js/Popup.js') }}"></script>
     <script>
 
         const salesData = {

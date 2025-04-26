@@ -60,22 +60,6 @@
             font-weight: bold;
             margin-right: 10px;
         }
-        
-        .supplier-button{
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        #supplier-button{
-            background-color: green;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s
-        }
 
         .add-button{
             display: flex;

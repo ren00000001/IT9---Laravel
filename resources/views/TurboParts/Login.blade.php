@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
         *{
@@ -36,6 +37,51 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.5;
+        }
+
+        .error-message{
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4444;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.3s, fadeOut 0.3s 4.7s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; top: 0; }
+            to { opacity: 1; top: 20px; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; top: 20px; }
+            to { opacity: 0; top: 0; }
+        }
+        
+        .error-message i {
+            margin-right: 10px;
+        }
+        
+        .role-error {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #role-error{
+            margin-top: 5px;
+        }
+        
+        .invalid-select {
+            border-color: #ff4444 !important;
         }
 
         .container{
@@ -87,7 +133,7 @@
         }
 
         .container button{
-            background-color: #333;
+            background-color: var(--normalnavlink);
             color: #fff;
             font-size: 12px;
             padding: 10px 45px;
@@ -102,7 +148,7 @@
         }
 
         .container button:hover {
-            background-color: goldenrod;
+            background-color: #5A96C7;
             color: #222;
         }
 
@@ -112,7 +158,7 @@
         }
 
         .container button.hidden:hover {
-            background-color: goldenrod;
+            background-color: #5A96C7;
             color: #222;
         }
 
@@ -124,6 +170,8 @@
             flex-direction: column;
             padding: 0 40px;
             height: 100%; 
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .container h1 {
@@ -191,7 +239,6 @@
             }
         }
 
-
         .toggle-container{
             position: absolute;
             top: 0;
@@ -212,7 +259,7 @@
         .toggle{
             background-color: #333;
             height: 100%;
-            background: linear-gradient(135deg, #444, #222);
+            background: linear-gradient(90deg, var(--headertble) 0%,rgb(34, 40, 44) 100%);
             color: #fff;
             position: relative;
             left: -100%;
@@ -324,12 +371,34 @@
             border-color: #999;
         }
 
+        .container .password-container{
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .container .password-container input{
+            width: 100%;
+            color: #555;
+        }
+
+        .container .password-container img{
+            width: 20px;
+            cursor: pointer;
+        }
+        
+        
     </style>
 </head>
 <body>
 
     <div class="background-container">
         <img alt="background" class="background-image" src="{{ asset('images/Background.png') }}">
+    </div>
+
+    <div id="errorToast" class="error-message" style="display: none;">
+        <i>⚠️</i>
+        <span id="errorText"></span>
     </div>
 
     <div class="container" id="container">
@@ -356,7 +425,12 @@
                     @error('email')
                         <span class="error">{{ $message }}</span>
                     @enderror
-                <input type="password" name="password"  placeholder="Password">
+      
+                  <div class="password-container">
+                        <input type="password" name="password" id="password" placeholder="Password">
+                        <img id="show_and_hide" src="{{ asset('images/eye-close.png') }}" alt="Hide Password">
+                  </div>                       
+
                     @error('password')
                         <span class="error">{{ $message }}</span>
                     @enderror
@@ -369,11 +443,12 @@
                             <option value="staff">Staff</option>
                             <option value="admin">Admin</option>
                         </select>
+                        <span class="role-error" id="role-error">Please select your company role</span>
                     </div>
 
                 <button type="submit" class="signbtn" >Sign In</button>
 
-                    </form>
+            </form>
         </div>
 
         <div class="toggle-container">
@@ -411,6 +486,7 @@
     </div>
 
     <script>
+        /*pag switch ug form sa login*/
         const container = document.getElementById('container');
         const registerButton = document.getElementById('register');
         const loginButton = document.getElementById('login');
@@ -422,6 +498,67 @@
         loginButton.addEventListener('click', () => {
             container.classList.remove("active");
         });
+    </script>
+
+    <script>
+        /*exception handler if mag try ug login na walay ge pili na role drop down---*/
+        document.getElementById('loginForm').addEventListener('submit', function(e){
+            const roleSelect = document.getElementById('user-role');
+            const roleError = document.getElementById('role-error');
+
+            if(!roleSelect.value){
+                e.preventDefault();
+                roleSelect.classList.add('invalid-select');
+                roleError.style.display = 'block';
+                showError('Please select a role before signing in');
+            }
+        });
+
+        function showError(message){
+            const errorToast = document.getElementById('errorToast');
+            const errorText = document.getElementById('errorText');
+
+            errorText.textContent = message;
+            errorToast.style.display = 'flex';
+
+            setTimeout(() => {
+                errorToast.style.display = 'none';
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+
+            if(error){
+                showError('Please use the login properly');
+            }
+
+            document.getElementById('user-role').addEventListener('change', function(){
+                if(this.value){
+                    this.classList.remove('invalid-select');
+                    document.getElementById('role-error').style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        /*show and hide password*/
+        let show_and_hide = document.getElementById('show_and_hide');
+        let password = document.getElementById('password');
+    
+        show_and_hide.onclick = function(){
+            if(password.type == "password"){
+                password.type = "text";
+                show_and_hide.src = "{{ asset('images/eye-open.png') }}";
+            }
+            else{
+                password.type = "password";
+                show_and_hide.src = "{{ asset('images/eye-close.png') }}";
+            }
+        }
     </script>
 
 </body>

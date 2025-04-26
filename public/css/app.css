@@ -1,13 +1,46 @@
 /*Global--------------------------------------------*/
-:root {
-    --primary: #3498db;
-    --foricon: #222121;
-    --addbtn: rgb(231, 197, 6);
-    --secondary: #2ecc71;
-    --danger: #e74c3c;
-    --dark: #34495e;
-    --light: #ecf0f1;
-    --text: #2c3e50;
+:root{
+    /*body------------------------------*/
+    --body: #f0f2f5;
+    /*body------------------------------*/
+
+    /*button-----------------------------*/
+   --normalbtn: #4682b4; /*normal button*/
+   --secondbtn: #3A6A99; /*secondary button*/
+   --hoverbtn: #5A96C7; /*hover button*/
+    /*button-----------------------------*/
+
+    /*nav link-----------------------------*/
+   --normalnavlink: #2c3539; /*normal navigation bg color link*/
+   --defaultnavtext: #b87333; /*text color nav link*/
+   --hovernavlink: #b87333; /*navlink border hover*/
+   --hovertextnavlink: #222222; /*hover text for nav link*/
+   --textnavlink: #df944d;
+    /*nav link-----------------------------*/
+
+    /*table-----------------------------*/
+   --headertble: #2c3539; /*bg color for table*/
+   --headertxt: #d7d7d7; /*header text*/
+   --tableborder:#cacaca;
+   --importanthl: #b87333; /*important highlight*/ 
+    /*table-----------------------------*/
+
+    --gunmetal: #2c3539; /* Dark metallic gray */
+    --chrome-silver: #d7d7d7; /* Bright metallic silver */
+    --steel-blue: #4682b4; /* Blue with metallic undertones */
+    --oil-black: #0f0f0f; /* Deep black */
+    --copper-accent: #b87333; /* Warm metallic accent */
+    --titanium-white: #f5f5f5; /* Light background color */
+    --racing-red: #cc0000; /* For alerts and errors */
+    --machine-yellow: #ffd700; /* For warnings */
+
+    --steel: #8e9eab;
+    --aluminum: #eef2f3;
+    --chrome: #c0c0c0;
+    --copper: #b87333;
+    --oil-stain: #2c3539;
+    --carbon: #222222;
+    --brass: #b5a642;
 }
 
 * {
@@ -27,14 +60,14 @@ main {
 }
 
 body{
-    background-color: #f5f7fa;
+    background-color: var(--body);
 }
 /*Global--------------------------------------------*/
 
 /*Sidebar-------------------------------------------*/
 nav {
     height: 60px;
-    background-color: goldenrod;
+    background: linear-gradient(90deg, var(--headertble) 0%, #3a444a 100%);
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -42,11 +75,12 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rbga(0, 0, 0, 0.15);
 }
 
 nav h1 {
-    color: #222;
+    color: var(--textnavlink);
     position: absolute; /* Keep it centered in the nav */
     left: 50%; /* Center horizontally */
     top: 50%; /* Center vertically */
@@ -60,21 +94,29 @@ nav h1 {
     display: flex;
     flex-direction: row;
     align-items: center;
+    top: 0;
+    padding-top: 20px;
 }
 
 nav a {
     height: 100%;
     padding: 0 20px;
     display: flex;
+    font-size: 16px;
     align-items: center;
     text-decoration: none;
-    color: #222;
+    color: var(--textnavlink);
     font-weight: 600;
+    position: relative;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    transition: background 0.3s ease , color 0.3s ease, border-left 0.2 ease;
 }
 
 nav a:hover {
-    background-color: #222;
+    background: linear-gradient(90deg, rgba(184, 115, 51, 0.2) 0%, rgba(34, 34, 34, 1) 100%);
     color: white;
+    border-left: 3px solid #b87333;
 }
 
 nav .home-link {
@@ -86,8 +128,8 @@ nav svg {
 }
 
 .nav-logo {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     margin: 10px auto 20px auto;
     display: block;
     background-color: #e7e5e5;
@@ -97,12 +139,12 @@ nav svg {
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     overflow: hidden;
-    border: 2px solid #e0e0e0;
+    border: 1px solid #e0e0e0;
 }
 
 .nav-logo img {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
 }
 
@@ -113,7 +155,7 @@ nav svg {
 .open-sidebar-button,
 .close-sidebar-button {
     display: none;
-    background-color: #222;
+    background-color: var(--secondbtn);
 }
 
 /* Always show the sidebar toggle button */
@@ -127,17 +169,39 @@ nav svg {
 /* Sidebar styles (always active) */
 .links-container {
  /* Hide by default */
+    height: 100%;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
     position: fixed;
     top: 0;
+    padding-top: 60px;
+    position: fixed;
     left: -100%;
     z-index: 10;
     width: 250px;
     height: 100vh; /* Full height */
-    background-color: goldenrod;
+    background-color: #2c3539;
     box-shadow: 5px 0 5px rgba(0, 0, 0, 0.25);
     transition: 0.65s ease-in-out;
+}
+
+/* Adjust link styles for the sidebar */
+.links-container a {
+    position: relative;
+    box-sizing: border-box;
+    font-size: 18px;
+    height: auto;
+    width: 100%;
+    padding: 15px 30px;
+    justify-content: flex-start;
+    transition: all 0.3s ease;
+}
+
+.links-container a:hover{
+    background: linear-grdient(90deg, rgba(184, 115, 51, 0.2) 0%, rgba(34, 34, 34, 1) 100%);
+    color: whitel;
+    border-left: 3px solid #b87333;
 }
 
 /* Show the sidebar when the checkbox is checked */
@@ -148,29 +212,13 @@ nav svg {
 /* Close button inside the sidebar */
 .close-sidebar-button {
     display: block;
-    padding: 12.3px;
-    cursor: pointer;
-    align-self: flex-end;
-}
-
-/* Adjust link styles for the sidebar */
-.links-container a {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    width: 100%;
-    padding: 20px 30px;
-    justify-content: flex-start;
-}
-
-.links-container a::before{
-    content: "";
     position: absolute;
+    padding: 12px;
+    cursor: pointer;
     top: 0;
-    left: 20px; /* Adjust this to move the border from the left */
-    right: 20px; /* Adjust this to move the border from the right */
-    height: 1px; /* Border thickness */
-    background-color: rgba(0,0,0); /* Border color - subtle gray */ 
+    right: 0;
+    border: none;
+    z-index: 11;
 }
 
 #sidebar-active:checked ~ #overlay{
@@ -184,11 +232,25 @@ nav svg {
 
 .logout-link{
     margin-top: auto;
+    margin-bottom: 60px;
+    position: relative;
+    top: -30px;
+    padding-top: 15px;
+}
+
+.logout-link::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 30px;
+    right: 30px;
+    height: 3px;
+    background-color: rgba(184, 115, 51, 0.3);
 }
 /*Sidebar-------------------------------------------*/
 
 /*Time----------------------------------------------*/
-
 #real-time-display {
     font-weight: bold;
     margin-right: 15px;
@@ -207,22 +269,36 @@ nav svg {
     justify-content: space-between; /* Align title and button horizontally */
     align-items: center; /* Vertically center items */
     margin-top: 20px; /* Add spacing above the page header */
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--tableborder);
+    padding-bottom: 15px;
 }
 
 .page-title {
     font-size: 35px;
     font-weight: 600;
+    color: var(--headertble);
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.page-title::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--hovernavlink);
 }
 
  /* Adjust the page header--------------------------*/
 
 
  /*Table -------------------------------------------*/
-
  table {
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 5px 0;
     font-size: 0.9em;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
@@ -233,8 +309,8 @@ nav svg {
 }
 
 table th {
-    background-color: goldenrod; /* Keep the header background color */
-    color: #222; /* Keep the header text color */
+    background-color: var(--headertble); /* Keep the header background color */
+    color: var(--headertxt); /* Keep the header text color */
     text-align: left;
     font-weight: bold;
     padding: 12px 15px;
@@ -248,20 +324,32 @@ table td {
     white-space: nowrap; /* Prevents text from wrapping */
     overflow: hidden; /* Hides overflow content */
     text-overflow: ellipsis; /* Adds an ellipsis (...) for overflow text */
+    border-bottom: 1px solid var(--tableborder);
+}
+
+table tbody tr:nth-child(even) {
+    background-color: var(--tablestripe);
+}
+
+table tbody tr:hover {
+    background-color: var(--tablehover);
 }
 
 table tbody tr {
-    border-bottom: 1px solid rgb(153, 153, 153);
+    transition: background-color 0.2s ease;
 }
 
 table tbody tr:last-of-type {
-    border-bottom: 2px solid rgb(22, 22, 22);
+    border-bottom: 2px solid var(--gunmetal);
 }
 
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
  /*Table -------------------------------------------*/
 
 /*Search bar----------------------------------------*/
-
 /* Center the search bar */
 .search-bar {
     text-align: center; /* Center the search bar content */
@@ -269,15 +357,21 @@ table tbody tr:last-of-type {
 }
 
 .search-bar h3 {
-    margin-bottom: 10px; /* Add spacing below the "Search" heading */
+    margin-bottom: 10px;
+    color: var(--gunmetal); /* Add spacing below the "Search" heading */
+    font-weight: 600;
 }
 
 .search-bar input {
-    width: 300px; /* Set a fixed width for the search input */
+    width: 300px;
     padding: 10px 15px 10px 40px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid var(--tableborder);
+    border-radius: 30px;
     font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: var(--oil-black);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .search-container{
@@ -298,3 +392,78 @@ table tbody tr:last-of-type {
 }
 
 /*Search bar----------------------------------------*/
+
+
+/*PopUP---------------------------------------------*/
+.popup-trigger{
+    cursor: pointer;
+    margin: 20px;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.popup-overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.popup-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 80%;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.3s;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #888;
+    background: none;
+    border: none;
+    padding: 0 10px;
+}
+
+.close-btn:hover {
+    color: #ff0000;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.popup-content p {
+    color: #555;
+    line-height: 1.6;
+}
+/*PopUP---------------------------------------------*/

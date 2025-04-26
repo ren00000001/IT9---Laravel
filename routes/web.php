@@ -1,10 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth;
-use Symfony\Component\HttpFoundation\Request;
 use App\Http\Controllers\AuthController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +16,12 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return view('TurboParts.Login');
-})->name('login');
+})->name('login.show');
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::post('/', [AuthController::class, 'logout']
+)->name('logout');
 
 Route::prefix('TurboParts')->group(function() {
 
@@ -50,6 +50,10 @@ Route::prefix('TurboParts')->group(function() {
         Route::get('/sales', function () {
             return view('TurboParts.Admin.Sales');
         })->name('admin.sales');
+
+        Route::get('/Full History', function(){
+            return view('TurboParts.Admin.FullHistory');
+        })->name('admin.viewhistory');
         
         Route::get('/archives', function () {
             return view('TurboParts.Admin.Archives');
@@ -69,7 +73,4 @@ Route::prefix('TurboParts')->group(function() {
     });     
 
 });
-
-Route::post('/', [AuthController::class, 'logout']
-)->name('logout');
 
