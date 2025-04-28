@@ -5,7 +5,7 @@
     /*body------------------------------*/
 
     /*button-----------------------------*/
-   --normalbtn: #4682b4; /*normal button*/
+   --normalbtn: #4682b4; /*normal button*/ 
    --secondbtn: #3A6A99; /*secondary button*/
    --hoverbtn: #5A96C7; /*hover button*/
     /*button-----------------------------*/
@@ -259,7 +259,6 @@ nav svg {
     border-radius: 4px;
     font-size: 0.9rem;
 }
-
 /*Time----------------------------------------------*/
 
  /* Adjust the page header--------------------------*/

@@ -45,6 +45,14 @@
             margin-right: 10px;
         }
 
+        #current-date{
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-align: right;
+        }
+
         .cards{
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -224,6 +232,7 @@
                         </div>
                     <!--POPUP INFO------------------------------------------------>
 
+                    <div id="current-date"></div>
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
                     <div class="user-area">

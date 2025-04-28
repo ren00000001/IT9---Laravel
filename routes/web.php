@@ -67,9 +67,13 @@ Route::prefix('TurboParts')->group(function() {
     
     Route::prefix('Staff')->group(function(){
         
-        Route::get('/dashboard', function(){
-            return view('TurboParts.Cashier.Dashboard');
-        })->name('cashier.dashboard');
+        Route::get('/pos', function(){
+            return view('TurboParts.Cashier.POS');
+        })->name('cashier.pos');
+
+        Route::get('/sales', function(){
+            return view('TurboParts.Cashier.Sales');
+        })->name('cashier.sales');
     });     
 
 });

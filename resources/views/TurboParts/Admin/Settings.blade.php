@@ -61,7 +61,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background-color: green;
+            background-color: var(--normalbtn);
             color: white;
             border: none;
             border-radius: 5px;
@@ -72,7 +72,7 @@
         }
 
         #add-button:hover{
-            background-color: rgb(25, 99, 25);
+            background-color: var(--hoverbtn);
         }
 
         .add-product-icon{

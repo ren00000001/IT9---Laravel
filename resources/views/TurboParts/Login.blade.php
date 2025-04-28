@@ -421,7 +421,7 @@
             @csrf
                 <h1>Sign In</h1>
                 
-                <input type="email" name="email" placeholder="Email">
+                <input type="email" name="email" placeholder="Name">
                     @error('email')
                         <span class="error">{{ $message }}</span>
                     @enderror

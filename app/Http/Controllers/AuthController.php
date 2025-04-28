@@ -75,7 +75,7 @@ class AuthController extends Controller
 
         switch($userRole){
             case 'cashier':
-                return redirect()->route('cashier.dashboard');
+                return redirect()->route('cashier.pos');
             case 'admin':
                 return redirect()->route('admin.dashboard');
             default: 
