@@ -65,7 +65,7 @@ Route::prefix('TurboParts')->group(function() {
     
     });
     
-    Route::prefix('Staff')->group(function(){
+    Route::prefix('Cashier')->group(function(){
         
         Route::get('/pos', function(){
             return view('TurboParts.Cashier.POS');

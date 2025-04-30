@@ -50,6 +50,72 @@
             margin-right: 10px;
         }
 
+        .cards{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem; 
+        }
+
+        .card{
+            background-color: whitesmoke;
+            border-radius: 8px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69. 0.1);
+            overfloW: hidden;
+            min-width: 250px;
+            height: 120px;
+        }
+
+        .card-body{
+            padding: 1.25rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-card{
+            width: 100%;
+            display: flex;
+            align-items: space-between;
+            align-items: center;
+        }
+
+        .stat-value{
+            font-size: 27px;
+            font-weight: 700;
+            color: var(--gunmetal);
+            flex-shrink: 0;
+            margin-right: 1rem
+        }
+
+        .stat-label{
+            font-size: 20px;
+            color: #6c757d;
+            text-align: right;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .primary { 
+            background: linear-gradient(135deg, #f0f2f5 0%, #e4e7eb 100%);
+            border-left: 4px solid var(--steel);
+            box-shadow: inset 2px 0 3px rgba(142, 158, 171, 0.3);
+        }
+
+        .success { 
+            background: linear-gradient(135deg, #f5f7f0 0%, #e8ebdf 100%);
+            border-left: 4px solid var(--chrome);
+            box-shadow: inset 2px 0 3px rgba(192, 192, 192, 0.4);
+        }
+
+        .warning { 
+            background: linear-gradient(135deg, #f7f5f0 0%, #ebe7df 100%);
+            border-left: 4px solid var(--brass);
+            box-shadow: inset 2px 0 3px rgba(181, 166, 66, 0.3);
+        }
+
     </style>
 </head>
 
@@ -132,9 +198,40 @@
 
                 </div>
 
-                <div class="page-header">
-                    <div class="page-title">Sales</div>
+                <div class="search-bar">
+                    <div class="search-container">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+                    </div>
+                    <input type="text" placeholder="Search Sale's...">
                 </div>
+
+                <div class="page-header">
+                    <div class="page-title">Sales Overview</div>
+                </div>
+
+                <div class="cards">
+                    <div class="card stat-card primary">
+                        <div class="card-body">
+                            <div class="stat-value">$1234</div>
+                            <div class="stat-label">Total Sales</div>
+                        </div>
+                    </div>
+
+                    <div class="card stat-card success">
+                        <div class="card-body">
+                            <div class="stat-value">34</div>
+                            <div class="stat-label">New Orders/month</div>
+                        </div>
+                    </div>
+
+                    <div class="card stat-card warning">
+                        <div class="card-body">
+                            <div class="stat-value">230</div>
+                            <div class="stat-labek">Total Orders</div>
+                        </div>
+                    </div>
+                </div>
+                
 
             </div>
         </div>
