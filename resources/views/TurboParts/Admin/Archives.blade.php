@@ -8,16 +8,6 @@
 
     <style>
 
-        :root {
-            --primary: #3498db;
-            --foricon: #222121;
-            --secondary: #2ecc71;
-            --danger: #e74c3c;
-            --dark: #34495e;
-            --light: #ecf0f1;
-            --text: #2c3e50;
-        }
-
          .container{
             display: flex;
             min-height: 100vh;
@@ -204,9 +194,7 @@
     
                 <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
                 <a href="{{ route('admin.products') }}">Products</a>
-                <a href="{{ route('admin.customers') }}">Customers</a>
                 <a href="{{ route('admin.inventory') }}">Inventory</a>
-                <a href="{{ route('admin.supplier') }}">Supplier</a>
                 <a href="{{ route('admin.sales') }}">Sales</a>
                 <a href="{{ route('admin.archives') }}">Archives</a>
                 <a href="{{ route('admin.settings') }}">Settings</a>

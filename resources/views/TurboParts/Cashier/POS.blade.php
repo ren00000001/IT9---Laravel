@@ -347,7 +347,7 @@
                 
                 <a class="home-link" href="{{ route('cashier.pos') }}">Point of Sale</a>
                 <a href="{{ route('cashier.sales') }}">Sales</a>
-                <a href="{{ route('admin.inventory') }}">Inventory</a>
+                <a href="{{ route('cashier.inventory') }}">Inventory</a>
                 <a class="logout-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Log out

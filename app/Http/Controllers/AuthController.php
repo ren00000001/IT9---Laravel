@@ -78,6 +78,8 @@ class AuthController extends Controller
                 return redirect()->route('cashier.pos');
             case 'admin':
                 return redirect()->route('admin.dashboard');
+            case 'staff':
+                return redirect()->route('staff.products');
             default: 
                 return redirect('login');
         }

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System - No Spinner Arrows</title>
+    <style>
+        /* Hide number input arrows */
+        .number-input input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        .number-input input[type="number"]::-webkit-outer-spin-button,
+        .number-input input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none; /* Safari/Chrome */
+            margin: 0;
+        }
+
+        /* Rest of your styles */
+        .number-input {
+            display: flex;
+            align-items: center;
+        }
+        .number-input input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .number-input button {
+            width: 30px;
+            height: 30px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .number-input button:hover {
+            background: #e0e0e0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>POS System - Quantity Adjuster (No Arrows)</h2>
+    <table id="posTable">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Product 1</td>
+                <td>$10.00</td>
+                <td>
+                    <div class="number-input">
+                        <button class="decrement">-</button>
+                        <input type="number" value="1" min="0" class="quantity">
+                        <button class="increment">+</button>
+                    </div>
+                </td>
+                <td class="total">$10.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('posTable');
+            
+            table.addEventListener('click', function(e) {
+                const button = e.target;
+                const input = button.parentElement.querySelector('.quantity');
+                
+                if (button.classList.contains('increment')) {
+                    input.stepUp();
+                    updateTotal(input);
+                } else if (button.classList.contains('decrement')) {
+                    input.stepDown();
+                    updateTotal(input);
+                }
+            });
+            
+            table.addEventListener('input', function(e) {
+                if (e.target.classList.contains('quantity')) {
+                    updateTotal(e.target);
+                }
+            });
+            
+            function updateTotal(input) {
+                const row = input.closest('tr');
+                const price = parseFloat(row.querySelector('td:nth-child(2)').textContent.replace('$', ''));
+                const quantity = parseInt(input.value);
+                const totalCell = row.querySelector('.total');
+                totalCell.textContent = `$${(price * quantity).toFixed(2)}`;
+            }
+        });
+    </script>
+</body>
+</html>

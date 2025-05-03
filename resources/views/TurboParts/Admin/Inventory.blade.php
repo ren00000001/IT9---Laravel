@@ -177,27 +177,6 @@
             font-weight: 600;
         }
 
-        .view-options {
-            display: flex;
-            align-items: center;
-        }
-
-        .view-option {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .view-option.active {
-            background-color: rgba(52, 152, 219, 0.1);
-            color: var(--primary);
-        }
-
         .product-id {
             color: var(--primary);
             font-weight: 500;
@@ -303,9 +282,7 @@
     
                 <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
                 <a href="{{ route('admin.products') }}">Products</a>
-                <a href="{{ route('admin.customers') }}">Customers</a>
                 <a href="{{ route('admin.inventory') }}">Inventory</a>
-                <a href="{{ route('admin.supplier') }}">Supplier</a>
                 <a href="{{ route('admin.sales') }}">Sales</a>
                 <a href="{{ route('admin.archives') }}">Archives</a>
                 <a href="{{ route('admin.settings') }}">Settings</a>
@@ -431,6 +408,7 @@
                     </div>
 
                 </div>
+                
             </div>
         </div>
     </main>

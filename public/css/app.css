@@ -304,7 +304,16 @@ nav svg {
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
     width: 100%;
-    table-layout: fixed; /* Ensures the table respects column widths */
+    table-layout: auto; /* Ensures the table respects column widths */
+    background: whitesmoke;
+}
+
+thead th{
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1);
 }
 
 table th {
@@ -326,6 +335,10 @@ table td {
     border-bottom: 1px solid var(--tableborder);
 }
 
+table tbody tr{
+    height: 40px
+}
+
 table tbody tr:nth-child(even) {
     background-color: var(--tablestripe);
 }
@@ -343,8 +356,28 @@ table tbody tr:last-of-type {
 }
 
 .table-responsive {
-    overflow-x: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    display: block;
     -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
  /*Table -------------------------------------------*/
 

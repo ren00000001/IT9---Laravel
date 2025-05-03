@@ -23,7 +23,7 @@
             justify-content: flex-end;
             align-items: center;
             margin-bottom: 20px;
-            gap: 25px;
+            gap: 20px;
         }
 
         .user-area{
@@ -48,6 +48,31 @@
             justify-content: center;
             font-weight: bold;
             margin-right: 10px;
+        }
+
+        .viewfullhistory-btn{
+            display: flex;
+            justify-content: flex-end;
+            margin: 15px;
+        }
+
+        #viewfullhistory-btn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--secondbtn);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #viewfullhistory-btn:hover{
+            background-color: var(--hoverbtn);
         }
 
         .cards{
@@ -78,7 +103,6 @@
         .stat-card{
             width: 100%;
             display: flex;
-            align-items: space-between;
             align-items: center;
         }
 
@@ -116,6 +140,50 @@
             box-shadow: inset 2px 0 3px rgba(181, 166, 66, 0.3);
         }
 
+        .table-container{
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            padding: 0 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .table-wrapper{
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+           
+        }
+
+        .main-table{
+            flex: 3;
+        }
+
+        .sub-table{
+            flex: 1;
+        }
+
+        .main-table table th:nth-child(1),
+        .main-table table th:nth-child(2),
+        .main-table table th:nth-child(4){
+            width: 8%;
+        }
+
+        .main-table table th:nth-child(3),
+        .main-table table th:nth-child(5),
+        .main-table table th:nth-child(6){
+            width: 12%;
+        }
+
+        .main-table table th:nth-child(7){
+            width: 15%;
+        }
+
+        /* <a href="{{ route('cashier.viewhistory') }}" style="text-decoration: none;">
+                            <button class="viewhistory-button">Full History<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                            </button>
+                        </a>*/
     </style>
 </head>
 
@@ -128,7 +196,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
                 </label>
 
-            <label for="sidebar-active" id="overlay"></label>
+            <label id="overlay" for="sidebar-active"></label>
             <div class="links-container">
                 <label for="sidebar-active" class="close-sidebar-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
@@ -140,7 +208,7 @@
                 
                 <a class="home-link" href="{{ route('cashier.pos') }}">Point of Sale</a>
                 <a href="{{ route('cashier.sales') }}">Sales</a>
-                <a href="{{ route('admin.inventory') }}">Inventory</a>
+                <a href="{{ route('cashier.inventory') }}">Inventory</a>
                 <a class="logout-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Log out
@@ -209,6 +277,16 @@
                     <div class="page-title">Sales Overview</div>
                 </div>
 
+               
+
+                    <div class="viewfullhistory-btn">
+                        <a href="{{ route('cashier.viewhistory') }}" style="text-decoration: none;">
+                            <button id="viewfullhistory-btn">Full History<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                            </button>
+                        </a>
+                    </div>  
+               
+
                 <div class="cards">
                     <div class="card stat-card primary">
                         <div class="card-body">
@@ -227,11 +305,62 @@
                     <div class="card stat-card warning">
                         <div class="card-body">
                             <div class="stat-value">230</div>
-                            <div class="stat-labek">Total Orders</div>
+                            <div class="stat-label">Total Orders</div>
                         </div>
                     </div>
                 </div>
                 
+                <div class="table-container">
+
+                    <div class="table-wrapper main-table">
+                        <h2>Recent Purchases</h2>
+                        <table>
+                            <thead>
+                                 <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Costumer ID</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Date Purchased</th>
+                                    <th>Payement Method</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>rims</td>
+                                    <td>2</td>
+                                    <td>$1000</td>
+                                    <td>3/20/25</td>
+                                    <td>PayMaya</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-wrapper sub-table">
+                    <h2>Best Selling</h2>
+                    <table>
+                         <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Orders</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Helmet</td>
+                                    <td>$299</td>
+                                    <td>30</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
 
             </div>
         </div>

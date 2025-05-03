@@ -334,9 +334,7 @@
                     
                 <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
                 <a href="{{ route('admin.products') }}">Products</a>
-                <a href="{{ route('admin.customers') }}">Customers</a>
                 <a href="{{ route('admin.inventory') }}">Inventory</a>
-                <a href="{{ route('admin.supplier') }}">Supplier</a>
                 <a href="{{ route('admin.sales') }}">Sales</a>
                 <a href="{{ route('admin.archives') }}">Archives</a>
                 <a href="{{ route('admin.settings') }}">Settings</a>

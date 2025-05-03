@@ -168,25 +168,6 @@
             margin-bottom: 15px;
         }
 
-        .viewhistory-button{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background-color: var(--secondbtn);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .viewhistory-button:hover{
-            background-color: var(--hoverbtn);
-        }
-
         .recentsales-table-container{
             background-color: white;
             border-radius: 10px;
@@ -270,9 +251,7 @@
                 
                 <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
                 <a href="{{ route('admin.products') }}">Products</a>
-                <a href="{{ route('admin.customers') }}">Customers</a>
                 <a href="{{ route('admin.inventory') }}">Inventory</a>
-                <a href="{{ route('admin.supplier') }}">Supplier</a>
                 <a href="{{ route('admin.sales') }}">Sales</a>
                 <a href="{{ route('admin.archives') }}">Archives</a>
                 <a href="{{ route('admin.settings') }}">Settings</a>
@@ -410,10 +389,6 @@
                 <div class="recentsales-table-container">
                     <div class="table-header">
                         <div class="table-title">Recent Purchase</div>
-                        <a href="{{ route('admin.viewhistory') }}" style="text-decoration: none;">
-                            <button class="viewhistory-button">Full History<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
-                            </button>
-                        </a>
                     </div>
 
                     <div class="table-responsive">

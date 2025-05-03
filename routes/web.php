@@ -50,10 +50,6 @@ Route::prefix('TurboParts')->group(function() {
         Route::get('/sales', function () {
             return view('TurboParts.Admin.Sales');
         })->name('admin.sales');
-
-        Route::get('/Full History', function(){
-            return view('TurboParts.Admin.FullHistory');
-        })->name('admin.viewhistory');
         
         Route::get('/archives', function () {
             return view('TurboParts.Admin.Archives');
@@ -74,7 +70,26 @@ Route::prefix('TurboParts')->group(function() {
         Route::get('/sales', function(){
             return view('TurboParts.Cashier.Sales');
         })->name('cashier.sales');
-    });     
+
+        Route::get('/Full History', function(){
+            return view('TurboParts.Cashier.FullHistory');
+        })->name('cashier.viewhistory');
+
+        Route::get('/Inventory', function(){
+            return view('TurboParts.Cashier.Inventory');
+        })->name('cashier.inventory');
+    });    
+    
+    Route::prefix('Staff')->group(function(){
+
+        Route::get('/Products', function(){
+            return view('TurboParts.Staff.Products');
+        })->name('staff.products');
+
+        Route::get('Inventory', function(){
+            return view('TurboParts.Staff.Inventory');
+        })->name('staff.inventory');
+    });
 
 });
 
