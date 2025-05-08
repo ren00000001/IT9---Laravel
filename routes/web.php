@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,18 +37,9 @@ Route::prefix('TurboParts')->group(function() {
         Route::get('/products', function(){
             return view('TurboParts.Admin.Products');
         })->name('admin.products');
-    
-        Route::get('/customers', function () {
-            return view('TurboParts.Admin.Customers');
-        })->name('admin.customers');
         
-        Route::get('/invetory', function () {
-            return view('TurboParts.Admin.Inventory');
-        })->name('admin.inventory');
-        
-        Route::get('/supplier', function () {
-            return view('TurboParts.Admin.Supplier');
-        })->name('admin.supplier');
+        Route::get('/inventory', [CategoryController::class, 'adminIndex'])
+        ->name('admin.inventory');
          
         Route::get('/sales', function () {
             return view('TurboParts.Admin.Sales');
@@ -54,11 +48,21 @@ Route::prefix('TurboParts')->group(function() {
         Route::get('/archives', function () {
             return view('TurboParts.Admin.Archives');
         })->name('admin.archives');
-        
-        Route::get('/settings', function(){
-            return view('TurboParts.Admin.Settings');
-        })->name('admin.settings');
-    
+
+        Route::get('/settings', [UserController::class, 'index'])
+            ->name('admin.settings');
+
+            Route::post('/users', [UserController::class, 'store'])
+            ->name('admin.users.store');
+
+            Route::get('/users/{user}/edit', [UserController::class, 'edit'])
+            ->name('admin.users.edit');
+
+            Route::put('/users/{user}', [UserController::class, 'update'])
+            ->name('admin.users.update');
+
+            Route::delete('/users/{user}', [UserController::class, 'destroy'])
+            ->name('admin.users.destroy'); 
     });
     
     Route::prefix('Cashier')->group(function(){
@@ -78,18 +82,48 @@ Route::prefix('TurboParts')->group(function() {
         Route::get('/Inventory', function(){
             return view('TurboParts.Cashier.Inventory');
         })->name('cashier.inventory');
+        
     });    
     
     Route::prefix('Staff')->group(function(){
 
-        Route::get('/Products', function(){
+//Products---------------------------------------------------------------
+        /*Route::get('/Products', function(){
             return view('TurboParts.Staff.Products');
-        })->name('staff.products');
+        })->name('staff.products');*/
 
-        Route::get('Inventory', function(){
-            return view('TurboParts.Staff.Inventory');
-        })->name('staff.inventory');
+        Route::get('Products', [ProductController::class, 'index'])
+        ->name('staff.products');
+
+        Route::post('/products', [ProductController::class, 'store'])
+        ->name('staff.products.store');
+
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])
+        ->name('staff.products.edit');
+
+        Route::put('/products/{product}', [ProductController::class, 'update'])
+        ->name('staff.products.update');
+
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])
+        ->name('staff.products.destroy');
+//Products---------------------------------------------------------------
+
+//Inventory---------------------------------------------------------------
+        Route::get('Inventory', [CategoryController::class, 'index'])
+        ->name('staff.inventory');
+
+        Route::post('/categories', [CategoryController::class, 'store'])
+        ->name('staff.categories.store');
+
+        Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])
+        ->name('staff.categories.edit');
+
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])
+        ->name('staff.categories.update');
+
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
+        ->name('staff.categories.destroy');
     });
+//Inventory---------------------------------------------------------------
 
 });
-

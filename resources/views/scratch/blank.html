@@ -1,0 +1,162 @@
+<style>
+    .editcategory-modal{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .editcategory-modal-content{
+        background: white;
+        width: 90%;
+        max-width: 400px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        overflow: hidden;
+    }
+
+    .editmodal-header{
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        background: #f9fafc;
+    }
+
+    .editmodal-title {
+            margin: 0;
+            font-size: 22px;
+            color: #333;
+            font-weight: 600;
+    }
+
+    .editclose-btn{
+        float: right;
+        font-size: 24px;
+        color: #999;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    .editclose-btn:hover{
+        color: #666;
+    }
+
+    .editcategory-modalbody{
+        display: flex;
+        padding: 0;
+    }
+
+    .editform-category-section{
+        flex: 1.5;
+        padding: 20px;
+    }
+
+    .upload-editcategoryform{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .editform-group {
+            margin-bottom: 15px;
+    }
+
+    .editform-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .edit-category{
+        width: 100%;
+        max-width: 340px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border 0.2s;
+    }
+
+    .editcategory-button{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+    #edit_backBtn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background-color: var(--aluminum);
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #edit_backBtn:hover{
+        background-color: var(--tableborder);
+    }
+
+    #edit_categoryBtn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background-color: var(--normalbtn);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #edit_categoryBtn:hover{
+        background-color: var(--hoverbtn);
+    }
+
+</style>
+
+
+<div class="editcategory-modal" id="editcategory_modal">
+    <div class="editcategory-modal-content">
+        <div class="editmodal-header">
+            <h3 class="editmodal-title">Edit Current Category</h3>
+            <button class="editclose-btn" id="editcloseBtn">&times;</button>
+        </div>
+
+        <div class="editcategory-modalbody">
+
+            <div class="editform-category-section">
+                <form action="" class="upload-editcategoryform" id="upload_editcategory">
+                    @csrf
+                    @method('PUT')
+                    <div class="editform-group">
+                        <div class="editform-label">Edit Category</div>
+                        <input type="text" name="category_name" id="edit_category" class="edit-category" required>
+                    </div>
+
+                    <div class="editcategory-button">
+                        <button type="submit" id="edit_categoryBtn">Update Category</button>
+                        <button id="edit_backBtn">Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -620,7 +620,7 @@
 
             <label for="sidebar-active" id="overlay"></label>
             <div class="links-container">
-                <label for="" class="close-sidebar-button">
+                <label for="sidebar-active" class="close-sidebar-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
 
@@ -754,20 +754,20 @@
                                         <th>ID</th>
                                         <th>Product</th>
                                         <th>Category</th>
-                                        <th>Price</th>
-                                        <th>Stock</th>
-                                        <th>Added</th>
                                         <th>Status</th>
+                                        <th>Stock</th>
+                                        <th>Price</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($products as $product)
                                     <tr>
-                                        <td class="product-id">#PROD-001</td>
-                                        <td>Smartphone X</td>
-                                        <td>Electronics</td>
-                                        <td>$699.99</td>
-                                        <td>25</td>
+                                        <td>{{ $product->product_id }}</td>
+                                        <td>{{ $product->product_name }}</td>
+                                        <td>{{ $product->category->category_id ?? 'Uncategorized' }}</td>
+                                        <td>${{ number_format($product->product_price, 2) }}</td>
+                                        <td>{{ $product->product_quantity }}</td>
                                         <td>Jan 15, 2023</td>
                                         <td><span class="status-badge status-in-stock">In Stock</span></td>
                                         <td>
@@ -781,48 +781,9 @@
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-id">#PROD-001</td>
-                                        <td>Smartphone X</td>
-                                        <td>Electronics</td>
-                                        <td>$699.99</td>
-                                        <td>25</td>
-                                        <td>Jan 15, 2023</td>
-                                        <td><span class="status-badge status-in-stock">In Stock</span></td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <button id="table-editaction-button" class="table-action-button">
-                                                    <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-                                                </button>
-
-                                                <button id="table-deleteaction-button" class="table-action-button">
-                                                    <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr> <tr>
-                                        <td class="product-id">#PROD-001</td>
-                                        <td>Smartphone X</td>
-                                        <td>Electronics</td>
-                                        <td>$699.99</td>
-                                        <td>25</td>
-                                        <td>Jan 15, 2023</td>
-                                        <td><span class="status-badge status-in-stock">In Stock</span></td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <button id="table-editaction-button" class="table-action-button">
-                                                    <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-                                                </button>
-
-                                                <button id="table-deleteaction-button" class="table-action-button">
-                                                    <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
+                                    </tr>    
                                 </tbody>
+                                @endforeach
                             </table>
                         </div>
                     </div>
@@ -874,6 +835,47 @@
                 </div>
             </div>
         </div>
+
+    <!--
+        -->
+
+    <div class="modal" id="productmodal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Add Product</h3>
+                <span class="close-btn" id="closeModalBtn">&times;</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="preview-section">
+                    <div class="preview-container" id="previewContainer">
+                        <img class="preview-image" id="previewImage" alt="Product Preview">
+                        <div class="preview-placeholder" id="previewPlaceholder">
+                            Product Image Preview
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="upload-form" id="productForm" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="product_name" id="product_name">
+
+                        <div class="form-group">
+                            <label for="product_name" class="form-label">Product Name</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+
     <!--Add Modal------------------------------------------------------------------->
 
             </div>

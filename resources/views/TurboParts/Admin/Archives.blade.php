@@ -191,6 +191,10 @@
                 <label for="sidebar-active" class="close-sidebar-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
+
+                <div class="nav-logo">
+                    <img src="{{ asset('images/TurboParts3.png') }}" alt="">
+                </div>
     
                 <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
                 <a href="{{ route('admin.products') }}">Products</a>
@@ -218,6 +222,7 @@
             <div class="main-content">
 
                 <div class="header">
+                    <div id="current-date"></div>
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
                     <div class="user-area">

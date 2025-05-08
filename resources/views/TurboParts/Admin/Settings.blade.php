@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MotoPOS - Settings</title>
+    <title>TurboParts - Account</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
 
@@ -41,7 +42,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: black;
+            background-color: var(--headertble);
             color: white;
             display: flex;
             align-items: center;
@@ -144,6 +145,25 @@
             background-color: rgba(255, 0, 0, 0.1);
         }
 
+        /* Status Badge Styles */
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .status-active {
+            background-color: #e6f7ee;
+            color: var(--brass);
+        }
+
+        .status-inactive {
+            background-color: #fee2e2;
+            color: var(--racing-red);
+        }
+
         /*Add User Modal Styel---------------------------*/
         .modal-overlay{
             position: fixed;
@@ -216,16 +236,16 @@
         .form-group input,
         .form-group select{
             width: 100%;
+            max-width: 350px;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
         }
 
-        .form-group input:focus,
-        .form-group select:focus{
-            outline: none;
-            border-color: #4caf50;
+        .form-group img{
+            width: 20px;
+            cursor: pointer;
         }
 
         .modal-footer{
@@ -244,13 +264,13 @@
         }
 
         .btn-primary{
-            background-color: #4caf50;
+            background-color: var(--textnavlink);
             color: white;
             border: none;
         }
 
         .btn-primary:hover{
-            background-color: #45a049;
+            background-color: var(--hovernavlink);
         }
 
         .btn-secondary{
@@ -331,6 +351,10 @@
                     <label for="sidebar-active" class="close-sidebar-button">
                         <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                     </label>
+
+                    <div class="nav-logo">
+                        <img src="{{ asset('images/TurboParts3.png') }}" alt="">
+                    </div>
                     
                 <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
                 <a href="{{ route('admin.products') }}">Products</a>
@@ -384,7 +408,7 @@
                             </div>
                     <!--POPUP INFO------------------------------------------------>
 
-
+                        <div id="current-date"></div>
                         <div id="real-time-display"></div>
                         <span>User:</span>
                         <div class="user-area">
@@ -417,35 +441,39 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Password</th>
                                         <th>Role</th>
                                         <th>Status</th>
+                                        <th>Date Added</th>
                                         <th>Login</th>
-                                        <th>Logout</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($users as $user)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Alex</td>
-                                        <td>123456</td>
-                                        <td>Cashier</td>
-                                        <td>Active</td>
-                                        <td>April 10, 2025 8:30am</td>
-                                        <td>April 10, 2025 10:23am</td>
+                                        <td>{{ $user->user_id}}</td>
+                                        <td>{{ $user->user_firstname}} {{ $user->user_lastname}}</td>
+                                        <td>{{ $user->user_role}}</td>
+                                        <td>
+                                            <span class="status-badge status-{{ $user->is_active ? 'active' : 'inactive'}}">
+                                                {{ $user->is_active ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
+                                        <td>{{ $user->date_created->format('M d, Y')}}</td>
+                                        <td>{{ $user->last_login ? $user->last_login->format('M d, Y H:i') : 'Never'}}</td>
                                         <td>
                                             <div class="table-actions">
-                                                <button id="table-editaction-button" class="table-action-button">
+                                                <button id="table-editaction-button" class="table-action-button edit-user-btn" data-user-id="{{ $user->user_id }}">
                                                     <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
                                                 </button>                                                
                                                 
-                                                <button id="table-deleteaction-button" class="table-action-button">
+                                                <button id="table-deleteaction-button" class="table-action-button delete-user-btn" data-user-id="{{ $user->user_id }}">
                                                     <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                                                 </button>                                            
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -462,27 +490,39 @@
                     <h3 class="modal-title">Add Users</h3>
                     <button class="modal-close">&times;</button>
                 </div>
-                <form id="addUserForm">
+                <form id="addUserForm" action="{{ route('admin.users.store') }}">
+                    @csrf
                     <div class="form-group">
-                        <label for="userName">Name:</label>
-                        <input type="text" id="userName" name="userName" required>
+                        <label for="userFirstname">First Name:</label>
+                        <input type="text" id="userFirstname" name="user_firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userLastname">Last Name:</label>
+                        <input type="text" id="userLastname" name="user_lastname" required>
                     </div>
                     <div class="form-group">
                         <label for="userPassword">Password:</label>
-                        <input type="password" id="userPassword" name="userPassword" required>
+                        <input type="password" id="userPassword" name="user_password" required minlength="8">
+                        <img id="show_and_hide" src="{{ asset('images/eye-close.png') }}" alt="Hide Password">
                     </div>
                     <div class="form-group">
                         <label for="userRole">Role:</label>
-                        <select id="userRole" name="userRole" required>
-                            <option value="">Select Role</option>
+                        <select id="userRole" name="user_role" required>
                             <option value="admin">Admin</option>
                             <option value="cashier">Cashier</option>
-                            <option value="manager">Manager</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userStatus">Status:</label>
+                        <select id="userStatus" name="is_active" required>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary modal-close">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn btn-primary">Add User</button>
                     </div>
                 </form>
             </div>
@@ -496,13 +536,21 @@
                     <h3 class="modal-title">Edit User</h3>
                     <button class="modal-close">&times;</button>
                 </div>
-                <form id="editUserForm" method="POST" action="">
-                    
-                    <input type="hidden" id="editUserId" name="id">
+                <form id="editUserForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                    <input type="hidden" id="editUserId" name="user_id">
                     
                     <div class="form-group">
-                        <label for="editUserName">Name:</label>
-                        <input type="text" id="editUserName" name="name" required>
+                        <label for="editUserFirstname">First Name:</label>
+                        <input type="text" id="editUserFirstname" name="user_firstname" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editUserLastname">Last Name:</label>
+                        <input type="text" id="editUserLastname" name="user_lastname" required>
                     </div>
                     
                     <div class="password-toggle">
@@ -512,24 +560,24 @@
                     
                     <div class="form-group password-field" style="display: none;">
                         <label for="editUserPassword">New Password:</label>
-                        <input type="password" id="editUserPassword" name="password">
+                        <input type="password" id="editUserPassword" name="user_password" minlength="8">
+                        <img id="show_and_hide_edit" src="{{ asset('images/eye-close.png') }}" alt="Hide Password">
                     </div>
                     
                     <div class="form-group">
                         <label for="editUserRole">Role:</label>
-                        <select id="editUserRole" name="role" required>
-                            <option value="">Select Role</option>
-                            <option value="admin">Admin</option>
+                        <select id="editUserRole" name="user_role" required>
+                            <option value="admin"}>Admin</option>
                             <option value="cashier">Cashier</option>
-                            <option value="manager">Manager</option>
+                            <option value="staff">Staff</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="editUserStatus">Status:</label>
-                        <select id="editUserStatus" name="status" required>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                        <select id="editUserStatus" name="is_active" required>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                     
@@ -548,171 +596,266 @@
         <script src="{{ asset('js/scriptForTime.js') }}"></script>
         <script src="{{ asset('js/Popup.js') }}"></script>
 
-        <script>
-            //Add User Form POP-UP-----------------------
+        <script>      
+            /*show and hide password*/
+            let show_and_hide = document.getElementById('show_and_hide');
+            let password = document.getElementById('userPassword');
+            let show_and_hide_edit = document.getElementById('show_and_hide_edit');
+            let password2 = document.getElementById('editUserPassword');
+        
+            show_and_hide.onclick = function(){
+                if(password.type == "password"){
+                    password.type = "text";
+                    show_and_hide.src = "{{ asset('images/eye-open.png') }}";
+                }
+                else{
+                    password.type = "password";
+                    show_and_hide.src = "{{ asset('images/eye-close.png') }}";
+                }
+            }
 
-            document.addEventListener('DOMContentLoaded', function() {
-            const addButton = document.getElementById('add-button');
-            const modal = document.getElementById('addUserModal');
-            const closeButtons = document.querySelectorAll('.modal-close');
-            const form = document.getElementById('addUserForm');
-
-                // Open modal when Add User button is clicked
-                addButton.addEventListener('click', function() {
-                    modal.classList.add('active');
-                });
-
-                // Close modal when close button or cancel is clicked
-                closeButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        modal.classList.remove('active');
-                    });
-                });
-
-                // Close modal when clicking outside the modal content
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                    }
-                });
-
-                // Close modal with Escape key
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && modal.classList.contains('active')) {
-                        modal.classList.remove('active');
-                    }
-                });
-
-                // Form submission
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Get form values
-                    const name = document.getElementById('userName').value;
-                    const password = document.getElementById('userPassword').value;
-                    const role = document.getElementById('userRole').value;
-                    
-                    // Here you would typically send this data to your server
-                    console.log('Adding user:', { name, password, role });
-                    
-                    // Close the modal
-                    modal.classList.remove('active');
-                    
-                    // Reset the form
-                    form.reset();
-                    
-                    // Show success message (you can customize this)
-                    alert('User added successfully!');
-                });
-            });
-            //Add User Form POP-UP-----------------------
+            show_and_hide_edit.onclick = function(){
+                if(password2.type == "password"){
+                    password2.type = "text";
+                    show_and_hide_edit.src = "{{ asset('images/eye-open.png') }}";
+                }
+                else{
+                    password2.type = "password";
+                    show_and_hide_edit.src = "{{ asset('images/eye-close.png') }}";
+                }
+            }
         </script>
 
-    <script>
-            // Edit User Modal Functionality
-            document.addEventListener('DOMContentLoaded', function() {
-                const editButtons = document.querySelectorAll('#table-editaction-button');
-                const editModal = document.getElementById('editUserModal');
-                const closeButtons = document.querySelectorAll('.modal-close');
-                const editForm = document.getElementById('editUserForm');
-                const updatePasswordCheckbox = document.getElementById('updatePassword');
-                const passwordField = document.querySelector('.password-field');
+        <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            // Add User Button Click Handler
+            document.getElementById('add-button')?.addEventListener('click', function() {
+                document.getElementById('addUserModal').classList.add('active');
+            });
 
-                // Password toggle functionality
-                updatePasswordCheckbox.addEventListener('change', function() {
-                    passwordField.style.display = this.checked ? 'block' : 'none';
-                    if (!this.checked) {
-                        document.getElementById('editUserPassword').value = '';
+            // Modal Close Handlers (for both add and edit modals)
+            document.querySelectorAll('.modal-close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal-overlay, .edit-modal-overlay').classList.remove('active');
+                });
+            });
+
+            // Close modal when clicking outside
+            document.querySelectorAll('.modal-overlay, .edit-modal-overlay').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
                     }
                 });
+            });
 
-                // Open edit modal when Edit button is clicked
-                editButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Get user data from the table row (this is mock data - in real app you'd fetch from server)
-                        const row = this.closest('tr');
-                        const userId = row.cells[0].textContent;
-                        const userName = row.cells[1].textContent;
-                        const userRole = row.cells[3].textContent.toLowerCase();
-                        const userStatus = row.cells[4].textContent.toLowerCase();
-
-                        // Set form action URL (using Laravel route)
-                       
-                        
-                        // Populate form fields
-                        document.getElementById('editUserId').value = userId;
-                        document.getElementById('editUserName').value = userName;
-                        document.getElementById('editUserRole').value = userRole;
-                        document.getElementById('editUserStatus').value = userStatus;
-                        
-                        // Reset password fields
-                        updatePasswordCheckbox.checked = false;
-                        passwordField.style.display = 'none';
-                        document.getElementById('editUserPassword').value = '';
-                        
-                        // Show modal
-                        editModal.classList.add('active');
+            // Add User Form Submission
+            document.getElementById('addUserForm')?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const form = e.target;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Adding...';
+                    
+                    // Use correct URL for the form action
+                    const formData = new FormData(form);
+                    const response = await fetch('/TurboParts/Admin/users', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                        },
+                        body: formData
                     });
-                });
-
-                // Close modal when close button or cancel is clicked
-                closeButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        editModal.classList.remove('active');
-                    });
-                });
-
-                // Close modal when clicking outside the modal content
-                editModal.addEventListener('click', function(e) {
-                    if (e.target === editModal) {
-                        editModal.classList.remove('active');
+                    
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || 'Failed to add user');
                     }
-                });
+                    
+                    const data = await response.json().catch(() => ({}));
+                    alert('User added successfully!');
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Add User';
+                }
+            });
 
-                // Close modal with Escape key
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && editModal.classList.contains('active')) {
-                        editModal.classList.remove('active');
-                    }
-                });
-
-                // Form submission
-                editForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
+            // Edit User Button Click Handler - Use AJAX to fetch user data
+            document.querySelectorAll('.edit-user-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const userId = this.getAttribute('data-user-id');
                     
                     try {
-                        const response = await fetch(editForm.action, {
-                            method: 'POST',
+                        // Show loading indicator or message if desired
+                        console.log('Fetching user data...');
+                        
+                        // Construct the proper URL based on your routes
+                        const url = await fetch(`/TurboParts/Admin/users/${userId}/edit`);
+                        
+                        const response = await fetch(url, {
+                            method: 'GET',
                             headers: {
                                 'Accept': 'application/json',
                                 'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                            },
-                            body: new FormData(editForm)
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                            }
                         });
-
-                        const data = await response.json();
                         
                         if (!response.ok) {
-                            if (data.errors) {
-                                // Handle validation errors
-                                console.error('Validation errors:', data.errors);
-                            }
-                            throw new Error(data.message || 'Failed to update user');
+                            throw new Error(`HTTP error! Status: ${response.status}`);
                         }
                         
-                        // Success case
-                        editModal.classList.remove('active');
+                        const user = await response.json();
+                        console.log('User data received:', user);
                         
-                        // Refresh the page or update UI as needed
-                        window.location.reload();
+                        // Populate form with user data
+                        document.getElementById('editUserId').value = user.user_id;
+                        document.getElementById('editUserFirstname').value = user.user_firstname;
+                        document.getElementById('editUserLastname').value = user.user_lastname;
+                        document.getElementById('editUserRole').value = user.user_role;
+                        document.getElementById('editUserStatus').value = user.user_status;
+                        
+                        // Set form action
+                        document.getElementById('editUserForm').action = `/TurboParts/Admin/users/${userId}`;
+                        
+                        // Show modal
+                        document.getElementById('editUserModal').classList.add('active');
                         
                     } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error: ' + error.message);
+                        console.error('Error fetching user data:', error);
+                        
+                        // Fallback to getting data from the table row if AJAX fails
+                        const row = this.closest('tr');
+                        
+                        if (!row) {
+                            alert('Could not load user data. Please try again.');
+                            return;
+                        }
+                        
+                        // Get user data from the row
+                        const userName = row.querySelector('td:nth-child(2)').textContent.trim();
+                        const userRole = row.querySelector('td:nth-child(3)').textContent.trim().toLowerCase();
+                        const userStatus = row.querySelector('td:nth-child(4) .status-badge').textContent.trim().toLowerCase();
+                        
+                        // Split name into first and last name
+                        const nameParts = userName.split(' ');
+                        const firstName = nameParts[0] || '';
+                        const lastName = nameParts.slice(1).join(' ') || '';
+                        
+                        // Populate form
+                        document.getElementById('editUserId').value = userId;
+                        document.getElementById('editUserFirstname').value = firstName;
+                        document.getElementById('editUserLastname').value = lastName;
+                        document.getElementById('editUserRole').value = userRole;
+                        document.getElementById('editUserStatus').value = userStatus;
+                        
+                        // Set form action
+                        document.getElementById('editUserForm').action = `/TurboParts/Admin/users/${userId}`;
+                        
+                        // Show modal
+                        document.getElementById('editUserModal').classList.add('active');
                     }
                 });
             });
+
+            // Edit User Form Submission
+            document.getElementById('editUserForm')?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const form = e.target;
+                const url = '/TurboParts/Admin/users/' + document.getElementById('editUserId').value;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Saving...';
+                    
+                    // Create FormData object
+                    const formData = new FormData(form);
+                    
+                    // Only include password if checkbox is checked
+                    if (!document.getElementById('updatePassword').checked) {
+                        formData.delete('user_password');
+                    }
+                    
+                    // Add _method field for Laravel to recognize this as PUT
+                    formData.append('_method', 'PUT');
+                    
+                    const response = await fetch(form.action, {
+                        method: 'POST', // Laravel form submissions use POST with _method field
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                        },
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || 'Failed to update user');
+                    }
+                    
+                    const data = await response.json().catch(() => ({}));
+                    alert('User updated successfully!');
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Save Changes';
+                }
+            });
+
+            // Delete User
+            document.querySelectorAll('.delete-user-btn').forEach(btn => {
+                btn.addEventListener('click', function(){
+                    if(confirm('Are you sure you want to delete this user?')){
+                        const userId = this.getAttribute('data-user-id');
+                        const url = `/TurboParts/Admin/users/${userId}`;
+
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({_method: 'DELETE'})
+                        })
+                        .then(response => {
+                            if(!response.ok){
+                                throw new Error('Delete failed');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            alert('User deleted successfully');
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error deleting user: ' + error.message);
+                        });
+                    }
+                });
+            });
+
+            // Password Update Toggle
+            document.getElementById('updatePassword')?.addEventListener('change', function() {
+                const passwordField = document.querySelector('.password-field');
+                if (passwordField) {
+                    passwordField.style.display = this.checked ? 'block' : 'none';
+                }
+            });
+        });
+
         </script>
     
 </body>

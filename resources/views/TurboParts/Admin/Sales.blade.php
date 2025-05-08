@@ -301,6 +301,7 @@
                         </div>
                 <!--POPUP INFO------------------------------------------------>
 
+                    <div id="current-date"></div>
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
                     <div class="user-area">

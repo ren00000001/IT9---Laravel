@@ -7,17 +7,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
-        :root {
-            --primary: #3498db;
-            --foricon: #222121;
-            --addbtn: rgb(231, 197, 6);
-            --secondary: #2ecc71;
-            --danger: #e74c3c;
-            --dark: #34495e;
-            --light: #ecf0f1;
-            --text: #2c3e50;
-        }
-
+    
         .container { 
             display: flex;
             min-height: 100vh;
@@ -52,44 +42,14 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: var(--foricon);
+            background-color: var(--headertble);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             margin-right: 10px;
-        }
-
-        .add-button{
-            display: flex;
-            justify-content: flex-end;
-            margin: 15px;
-        }
-
-        #add-button {
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           gap: 8px;
-           background-color: green;
-           color: white;
-           border: none;
-           border-radius: 5px;
-           padding: 10px 15px;
-           font-size: 14px;
-           cursor: pointer;
-           transition: 0.3s;
-        }
-
-        #add-button:hover{
-            background-color: rgb(25, 99, 25);
-        }
-
-        .add-product-icon{
-            width: 25px;
-            height: 25px;
-        }
+        }                   
 
         /* Rest of your CSS styles */
         .filter-section {
@@ -571,6 +531,7 @@
             <div class="main-content">
                 <!-- Header with user icon in the top-right corner -->
                 <div class="header">
+                    <div id="current-date"></div>
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
                     <div class="user-area">
@@ -620,13 +581,6 @@
                             Apply Filters
                         </button>
                     </div>
-                </div>
-
-                <div class="add-button">
-                    <button id="add-button">
-                        <svg class="add-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-                        Add Product
-                    </button>
                 </div>
 
                 <div class="products-table-container">

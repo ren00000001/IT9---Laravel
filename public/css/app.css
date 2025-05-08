@@ -40,7 +40,7 @@
     --copper: #b87333;
     --oil-stain: #2c3539;
     --carbon: #222222;
-    --brass: #b5a642;
+    --brass: #287e29;
 }
 
 * {
@@ -259,6 +259,14 @@ nav svg {
     border-radius: 4px;
     font-size: 0.9rem;
 }
+
+#current-date{
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    text-align: right;
+}
 /*Time----------------------------------------------*/
 
  /* Adjust the page header--------------------------*/
@@ -380,6 +388,21 @@ table tbody tr:last-of-type {
     background: #555;
 }
  /*Table -------------------------------------------*/
+
+ /*Status---------------------------------------------*/
+    .status-badge {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background-color: #e6f7ee;
+        color: #00a854;
+    }
+ 
+ /*Status---------------------------------------------*/
 
 /*Search bar----------------------------------------*/
 /* Center the search bar */

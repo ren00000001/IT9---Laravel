@@ -421,8 +421,13 @@
             @csrf
                 <h1>Sign In</h1>
                 
-                <input type="email" name="email" placeholder="Name">
-                    @error('email')
+                <input type="text" name="firstname" placeholder="First Name">
+                    @error('firstname')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+
+                <input type="text" name="lastname" placeholder="Last Name">
+                    @error('lastname')
                         <span class="error">{{ $message }}</span>
                     @enderror
       

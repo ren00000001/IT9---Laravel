@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -66,14 +67,30 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
-        /*$credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);*/
-        
-        $userRole = $request->input('user_role');
+        $credentials = $request->validate([
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'password' => 'required|string',
+            'user_role' => 'required|in:admin,cashier,staff',
+        ]);
 
-        switch($userRole){
+
+        $user = User::where('user_firstname', $credentials['firstname'])
+                        ->where('user_lastname', $credentials['lastname'])
+                        ->where('user_role', $credentials['user_role'])
+                        ->first();
+                        
+               if(!$user || !password_verify($credentials['password'], $user->user_password)){
+                    return back()->withErrors([
+                        'login_error' => 'Invalid credentials or role mismatched',
+                    ])->withInput($request->except('password'));
+
+               }
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        switch($user->user_role){
             case 'cashier':
                 return redirect()->route('cashier.pos');
             case 'admin':
@@ -81,25 +98,11 @@ class AuthController extends Controller
             case 'staff':
                 return redirect()->route('staff.products');
             default: 
-                return redirect('login');
-        }
-
-        /*if(Auth::attempt($credentials)){
-            $request->session()->regenerate();
-
-            switch($userRole){
-                case 'cashier':
-                    return redirect()->route('TurboParts.Cashier.Dashboard');
-                case 'admin':
-                    return redirect()->route('TurboParts.Admin.Dasboard');
-            }
-        }*/
-
-        /*return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->withInput($request->except('password'));*/
-
-       
+                Auth::logout();
+                return redirect('login')->withErrors([
+                    'login_error' => 'Invalid user role'
+                ]);
+        }       
 
     }
 

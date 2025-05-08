@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff-Dashboard</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
         .container{
@@ -289,7 +290,7 @@
         .category-modal-content{
             background: white;
             width: 90%;
-            max-width: 700px;
+            max-width: 400px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             overflow: hidden;
@@ -309,16 +310,22 @@
         }
 
         .close-btn {
-            float: right;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: none;
+            border: none;
             font-size: 24px;
-            color: #999;
             cursor: pointer;
+            color: #777;
+            padding: 0;
+            margin: 0;
             line-height: 1;
         }
 
         .close-btn:hover {
             color: #666;
-        }    
+        }
 
         .category-modalbody {
             display: flex;
@@ -350,24 +357,12 @@
 
         .new-category {
             width: 100%;
-            padding: 10px 12px;
+            max-width: 340px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
             transition: border 0.2s;
-        }
-
-        .new-category:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
-
-        .product-category{
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
         }
 
         .category-button{
@@ -382,8 +377,8 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background-color: green;
-            color: white;
+            background-color: var(--aluminum);
+            color: #333;
             border: none;
             border-radius: 5px;
             padding: 10px 15px;
@@ -393,7 +388,7 @@
         }
 
         #back_button:hover{
-            background-color: rgb(25, 99, 25);
+            background-color: var(--tableborder);
         }
 
         #add_newcategory {
@@ -401,7 +396,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background-color: green;
+            background-color: var(--normalbtn);
             color: white;
             border: none;
             border-radius: 5px;
@@ -412,9 +407,153 @@
         }
 
         #add_newcategory:hover{
-            background-color: rgb(25, 99, 25);
+            background-color: var(--hoverbtn);
         }
 /*--------------------------------------------------*/
+
+        .modal-header, .editmodal-header{
+            position: relative;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background: #f9fafc;
+        }
+
+/*Edit----------------------------------------------*/
+    .editcategory-modal{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .editcategory-modal-content{
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .editmodal-header{
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background: #f9fafc;
+        }
+
+        .editmodal-title {
+                margin: 0;
+                font-size: 22px;
+                color: #333;
+                font-weight: 600;
+        }
+
+        .editclose-btn{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .editclose-btn:hover{
+            color: #666;
+        }
+
+        .editcategory-modalbody{
+            display: flex;
+            padding: 0;
+        }
+
+        .editform-category-section{
+            flex: 1.5;
+            padding: 20px;
+        }
+
+        .upload-editcategoryform{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .editform-group {
+                margin-bottom: 15px;
+        }
+
+        .editform-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .edit-category{
+            width: 100%;
+            max-width: 340px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+
+        .editcategory-button{
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 10px;
+            }
+
+        #edit_backBtn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--aluminum);
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #edit_backBtn:hover{
+            background-color: var(--tableborder);
+        }
+
+        #edit_categoryBtn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--normalbtn);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #edit_categoryBtn:hover{
+            background-color: var(--hoverbtn);
+        }
 
     </style>
 </head>
@@ -429,7 +568,7 @@
 
             <label for="sidebar-active" id="overlay"></label>
             <div class="links-container">
-                <label for="" class="close-sidebar-button">
+                <label for="sidebar-active" class="close-sidebar-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
 
@@ -437,7 +576,7 @@
                     <img src="{{ asset('images/TurboParts3.png') }}" alt="">
                 </div>
                 
-                <a class="home-link" href="{{ route('staff.products') }}">Point of Sale</a>
+                <a class="home-link" href="{{ route('staff.products') }}">Products</a>
                 <a href="{{ route('staff.inventory') }}">Inventory</a>
                 <a class="logout-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -531,19 +670,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($categories as $category)
                                         <tr>
-                                            <td>1</td>
-                                            <td>Exterior</td>
+                                            <td>{{ $category->category_id }}</td>
+                                            <td>{{ $category->category_name}}</td>
                                             <td>
-                                                <button id="table-editaction-button" class="table-action-button">
+                                                <button id="table-editaction-button" class="table-action-button" data-category-id="{{ $category->category_id }}">
                                                     <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
                                                 </button>
 
-                                                <button id="table-deleteaction-button" class="table-action-button">
+                                                <button id="table-deleteaction-button" class="table-action-button" data-category-id="{{ $category->category_id }}">
                                                     <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -595,35 +736,22 @@
                 <div class="category-modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title">Add New Category</h3>
-                        <span class="close-btn" id = "closemodalBtn">&times;</span>
+                        <button class="close-btn" id="closemodalBtn">&times;</button>
                     </div>
 
                     <div class="category-modalbody">
                          
                         <div class="form-category-section">
+                    
                             <form action="" class="upload-categoryform" id="upload_categoryform">
-                                
+                                @csrf
                                 <div class="form-group">
-                                    <div class="form-label"> Add new Product's Category</div>
-                                    <input type="text" name="new_category" id="new_category" class="new-category">
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="current-products-category">
-                                        <div class="form-label">Current Products Category </div>
-                                        <select name="product_category" id="product_category" class="product-category">
-                                            <option disabled>dbjsdsikch</option>
-                                            <option disabled>dbjsdsikch</option>
-                                            <option disabled>dbjsdsikch</option>
-                                            <option disabled>dbjsdsikch</option>
-                                            <option disabled>dbjsdsikch</option>
-                                            <option disabled>dbjsdsikch</option>
-                                        </select>
-                                    </div>
+                                    <div class="form-label">New Product's Category</div>
+                                    <input type="text" name="category_name" id="new_category" class="new-category" required>
                                 </div>
 
                                 <div class="category-button">                              
-                                    <button id="add_newcategory">Add New Category</button>
+                                    <button type="submit" id="add_newcategory">Add New Category</button>
                                     <button id="back_button">Back</button>
                                 </div>
                             </form>
@@ -633,6 +761,36 @@
             </div>
         <!-- Add Category--------------------------------------------------------------->
 
+        <!--Edit Category--------------------------------------------------------------->
+        <div class="editcategory-modal" id="editcategory_modal">
+            <div class="editcategory-modal-content">
+                <div class="editmodal-header">
+                    <h3 class="editmodal-title">Edit Current Category</h3>
+                    <button class="editclose-btn" id="editcloseBtn">&times;</button>
+                </div>
+
+                <div class="editcategory-modalbody">
+
+                    <div class="editform-category-section">
+                        <form action="" class="upload-editcategoryform" id="upload_editcategory">
+                            @csrf
+                            @method('PUT')
+                            <div class="editform-group">
+                                <div class="editform-label">Edit Category</div>
+                                <input type="text" name="category_name" id="edit_category" class="edit-category" required>
+                            </div>
+
+                            <div class="editcategory-button">
+                                <button type="submit" id="edit_categoryBtn">Update Category</button>
+                                <button id="edit_backBtn">Back</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!--Edit Category--------------------------------------------------------------->
+
 
             </div>
         </div>
@@ -640,33 +798,138 @@
     </main>
 
     <script src="{{ asset('js/scriptForTime.js') }}"></script>
+   
     <script>
-        /*Add Category------------------------------------------------*/
+        const modals = {
+            add: document.getElementById('category_modal'),
+            edit: document.getElementById('editcategory_modal')
+        };
 
-        const categorymodal = document.getElementById('category_modal');
-        const open_btn = document.getElementById('add-category');
-        const close_btn = document.getElementById('closemodalBtn');
-        const category_form = document.getElementById('upload_categoryform');
-        const backBtn = document.getElementById('back_button');
+        function openModal(modal) {
+            modal.style.display = 'flex';
+        }
 
-        open_btn.addEventListener('click', () => {
-            categorymodal.style.display = 'flex';
-        });
+        function closeModal(modal) {
+            modal.style.display = 'none';
+        }
 
-        close_btn.addEventListener('click', () =>{
-            categorymodal.style.display = 'none';
-        });
-
-        backBtn.addEventListener('click', () =>{
-            categorymodal.style.display = 'none';
-        });
+        document.getElementById('add-category').addEventListener('click', () => openModal(modals.add));
+        document.getElementById('closemodalBtn').addEventListener('click', () => closeModal(modals.add));
+        document.getElementById('back_button').addEventListener('click', () => closeModal(modals.add));
 
         window.addEventListener('click', (e) => {
-            if(e.target === categorymodal){
-                categorymodal.style.display = 'none';
+            if (e.target === modals.add || e.target === modals.edit) {
+                closeModal(e.target);
             }
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('upload_categoryform')?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const form = e.target;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Adding...';
+                    const response = await fetch('{{ route("staff.categories.store") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({
+                            category_name: document.getElementById('new_category').value
+                        })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Failed to add category');
+                    alert('Category added successfully!');
+                    window.location.reload();
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Add New Category';
+                }
+            });
+
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('#table-editaction-button')) {
+                    const button = e.target.closest('#table-editaction-button');
+                    const categoryId = button.dataset.categoryId;
+                    try {
+                        const response = await fetch(`/TurboParts/Staff/categories/${categoryId}/edit`);
+                        const category = await response.json();
+                        document.getElementById('edit_category').value = category.category_name;
+                        document.getElementById('upload_editcategory').action = `/TurboParts/Staff/categories/${categoryId}`;
+                        openModal(modals.edit);
+                    } catch (error) {
+                        alert('Error loading category: ' + error.message);
+                    }
+                }
+                
+                if (e.target.closest('#table-deleteaction-button')) {
+                    if (confirm('Are you sure you want to delete this category?')) {
+                        const button = e.target.closest('#table-deleteaction-button');
+                        const categoryId = button.dataset.categoryId;
+                        try {
+                            const response = await fetch(`/TurboParts/Staff/categories/${categoryId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                }
+                            });
+                            const data = await response.json();
+                            if (!response.ok) throw new Error(data.message || 'Delete failed');
+                            alert('Category deleted successfully!');
+                            window.location.reload();
+                        } catch (error) {
+                            alert('Error: ' + error.message);
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('upload_editcategory')?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const form = e.target;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Updating...';
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'X-HTTP-Method-Override': 'PUT'
+                        },
+                        body: JSON.stringify({
+                            category_name: document.getElementById('edit_category').value,
+                            _method: 'PUT'
+                        })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Update failed');
+                    alert('Category updated successfully!');
+                    window.location.reload();
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Update Category';
+                }
+            });
+
+            document.getElementById('editcloseBtn').addEventListener('click', () => closeModal(modals.edit));
+            document.getElementById('edit_backBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                closeModal(modals.edit);
+            });
+        });
     </script>
 
 </body>

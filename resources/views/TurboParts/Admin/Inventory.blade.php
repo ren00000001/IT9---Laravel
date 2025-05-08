@@ -52,7 +52,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: var(--foricon);
+            background-color: var(--headertble);
             color: white;
             display: flex;
             align-items: center;
@@ -61,26 +61,7 @@
             margin-right: 10px;
         }
 
-        .add-button{
-            display: flex;
-            justify-content: flex-end;
-            margin: 15px;
-        }
 
-        #add-button {
-            background-color: var(--addbtn);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s
-        }
-
-        #add-button:hover{
-            background-color: goldenrod;
-        }
         /* Rest of your CSS styles */
         .filter-section {
             background-color: white;
@@ -157,6 +138,45 @@
             height: 25px;
         }
 
+        .tables-container{
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .table-wrapper{
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+
+        .stocks-table-container{
+            flex: 3;
+        }
+
+        .current-category{
+            flex: 1;
+        }
+
+        .current-category{
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .current-category-table .stocks-table-container{
+            max-height: 200px;
+        }
+
+        .stocks-table-container .table-responsive{
+            max-height: 300px;
+        }
+
         .stocks-table-container {
             background-color: white;
             border-radius: 10px;
@@ -172,7 +192,7 @@
             margin-bottom: 15px;
         }
 
-        .class-title {
+        .table-title {
             font-size: 18px;
             font-weight: 600;
         }
@@ -279,6 +299,10 @@
                 <label for="sidebar-active" class="close-sidebar-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
+
+                <div class="nav-logo">
+                    <img src="{{ asset('images/TurboParts3.png') }}" alt="">
+                </div>
     
                 <a class="home-link" href="{{ route('admin.dashboard') }}">Home</a>
                 <a href="{{ route('admin.products') }}">Products</a>
@@ -305,6 +329,7 @@
             <div class="main-container">
                 <!-- Header with user icon in the top-right corner -->
                 <div class="header">
+                    <div id="current-date"></div>
                     <div id="real-time-display"></div>
                     <span>Admin:</span>
                     <div class="user-area">
@@ -356,43 +381,29 @@
                     </div>
                 </div>
 
-                <div class="add-button">
-                    <button id="add-button">Add New Product's Category</button>
-                </div>
-
                 <!-- Stocks Table -->
-                <div class="stocks-table-container">
-                    <div class="table-header">
-                        <div class="class-title">Stocks</div>
-                    </div>
+                <div class="tables-container">
 
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Product's Name</th>
-                                    <th>Stocks</th>
-                                    <th>Stock-In</th>
-                                    <th>Date Last Stock-In</th>
-                                    <th>Stock-Out</th>
-                                    <th>Date Last Stock-Out</th>
-                                    <th>Supplier</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>gauikrgia</td>
-                                    <td>zfdhughuzd</td>
-                                    <td>zfdhughuzd</td>
-                                    <td>fzjhfdk</td>
-                                    <td>fkjZfigS</td>
-                                    <td>gdfugSf</td>
-                                    <td>fkhjhLD</td>
-                                    <td>zgjfi</td>
-                                    <td>
-                                        <div class="table-actions">
+                    <div class="table-wrapper current-category">
+                        <div class="table-header">
+                            <div class="table-title">Current Product Category</div>
+                        </div>
+
+                        <div class="table-responsive current-category-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($categories as $category)
+                                    <tr>
+                                        <td>{{ $category->category_id }}</td>
+                                        <td>{{ $category->category_name}}</td>
+                                        <td>
                                             <button id="table-editaction-button" class="table-action-button">
                                                 <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
                                             </button>
@@ -400,11 +411,51 @@
                                             <button id="table-deleteaction-button" class="table-action-button">
                                                 <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                                             </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper stocks-table-container">
+                        <div class="table-header">
+                            <div class="table-title">Stocks</div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Product Name</th>
+                                        <th>Current Stocks</th>
+                                        <th>Stock-In Update</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Helmet</td>
+                                        <td>3</td>
+                                        <td>May 11, 2025</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button id="table-editaction-button" class="table-action-button">
+                                                    <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+                                                </button>
+
+                                                <button id="table-deleteaction-button" class="table-action-button">
+                                                    <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
