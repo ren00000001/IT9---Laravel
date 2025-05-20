@@ -21,4 +21,22 @@ class Inventory extends Model
     public function product(){
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    protected static function booted(){
+         static::saved(function ($inventory) {
+             if($inventory->product) { 
+                $inventory->product->update([
+                    'product_quantity' => $inventory->stocks_quantity
+                ]);
+            }
+        });
+
+        static::created(function ($inventory){
+             if($inventory->product) {  
+                $inventory->product->update([
+                    'product_quantity' => $inventory->stocks_quantity
+                ]);
+            }
+        });
+    }
 }

@@ -301,6 +301,89 @@ nav svg {
 
  /* Adjust the page header--------------------------*/
 
+ /*PopUp Notif--------------------------------------*/
+.alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 15px 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        border-left: 5px solid #155724;
+        position: fixed;
+        top: 150px;
+        right: 20px;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 300px;
+        max-width: 400px;
+        animation: slideIn 0.3s ease-out forwards;
+        transition: opacity 0.3s ease;
+    }
+
+.alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        border-left: 5px solid #721c24;
+        position: fixed;
+        top: 150px;
+        right: 20px;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 300px;
+        max-width: 400px;
+        animation: slideIn 0.3s ease-out forwards;
+        transition: opacity 0.3s ease;
+    }
+
+.alert-success button,
+.alert-error button {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 0 0 0 15px;
+        margin-left: 15px;
+    }
+
+@keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+.alert-success + .alert-success,
+.alert-success + .alert-error,
+.alert-error + .alert-success,
+.alert-error + .alert-error {
+        top: calc(20px + 70px);
+    }
+
+.alert-success + .alert-success + .alert-success,
+.alert-success + .alert-success + .alert-error,
+.alert-success + .alert-error + .alert-success,
+.alert-success + .alert-error + .alert-error,
+.alert-error + .alert-success + .alert-success,
+.alert-error + .alert-success + .alert-error,
+.alert-error + .alert-error + .alert-success,
+.alert-error + .alert-error + .alert-error {
+        top: calc(20px + 140px);
+    }
+ /*PopUp Notif--------------------------------------*/
 
  /*Table -------------------------------------------*/
  table {

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 
@@ -25,6 +27,13 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::post('/', [AuthController::class, 'logout']
 )->name('logout');
+
+ Route::post('/cashier/process-order', [OrderController::class, 'store'])
+        ->name('cashier.process-order');
+
+Route::get('/orders/{order}/receipt', [OrderController::class, 'showReceipt'])
+        ->name('orders.receipt');
+
 
 Route::prefix('TurboParts')->group(function() {
 
@@ -75,9 +84,8 @@ Route::prefix('TurboParts')->group(function() {
             return view('TurboParts.Cashier.Sales');
         })->name('cashier.sales');
 
-        Route::get('/Full History', function(){
-            return view('TurboParts.Cashier.FullHistory');
-        })->name('cashier.viewhistory');
+        Route::get('/sales/history', [OrderController::class, 'index'])
+        ->name('cashier.viewhistory');
 
         Route::get('/Inventory', function(){
             return view('TurboParts.Cashier.Inventory');
@@ -88,12 +96,11 @@ Route::prefix('TurboParts')->group(function() {
     Route::prefix('Staff')->group(function(){
 
 //Products---------------------------------------------------------------
-        /*Route::get('/Products', function(){
-            return view('TurboParts.Staff.Products');
-        })->name('staff.products');*/
-
         Route::get('Products', [ProductController::class, 'index'])
         ->name('staff.products');
+
+        Route::get('Products/low-stock', [ProductController::class, 'lowStock'])
+        ->name('staff.products.low-stock');
 
         Route::post('/products', [ProductController::class, 'store'])
         ->name('staff.products.store');
@@ -108,9 +115,15 @@ Route::prefix('TurboParts')->group(function() {
         ->name('staff.products.destroy');
 //Products---------------------------------------------------------------
 
-//Inventory---------------------------------------------------------------
-        Route::get('Inventory', [CategoryController::class, 'index'])
+//Inventory---------------------------------------------------------------      
+        Route::get('Inventory', [InventoryController::class, 'index'])
         ->name('staff.inventory');
+
+        Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])
+        ->name('staff.inventory.edit');
+
+        Route::put('/inventories/{inventory}', [InventoryController::class, 'update'])
+        ->name('staff.inventory.update');
 
         Route::post('/categories', [CategoryController::class, 'store'])
         ->name('staff.categories.store');

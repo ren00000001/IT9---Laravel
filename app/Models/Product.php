@@ -15,8 +15,10 @@ class Product extends Model
         'product_name',
         'category_id',
         'product_price',
+        'product_quantity',
         'product_status',
         'product_description',
+        'product_image',
     ];
 
     protected $casts = [
@@ -33,11 +35,21 @@ class Product extends Model
         return $this->hasOne(Inventory::class, 'product_id');
     }
 
-    public function setProductQuantityAttribute($value){
-        if($this->exists && $this->inventory){
-            throw new \Exception("Product quantity must be updated through inventory table");
+    public function getProductStatusAttribute(){
+        return $this->product_quantity > 0 ? 'In-Stock' : 'Out-of-Stock';    
+    }
+
+    protected static function booted(){
+        static::saving(function ($product) {
+            $product->product_status = $product->product_quantity > 0;
+        });
+    }
+
+    public function getImageAttribute(){
+        if ($this->product_image){
+            return asset('storage/' . $this->product_image);
         }
-        $this->attributes['product_quantity'] = $value;
+        return null;
     }
 
 }

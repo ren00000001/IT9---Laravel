@@ -411,7 +411,7 @@
         }
 /*--------------------------------------------------*/
 
-        .modal-header, .editmodal-header{
+        .modal-header, .editmodal-header, .updatestocks-header{
             position: relative;
             padding: 20px;
             border-bottom: 1px solid #eee;
@@ -555,6 +555,182 @@
             background-color: var(--hoverbtn);
         }
 
+
+    /*update stocks css-------------------------------------- */
+        .updatestocks-modal{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .updatestocks-modal-content{
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .updatestocks-header{
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background: #f9fafc;
+        }
+
+        .updatestocks-title{
+            margin: 0;
+            font-size: 22px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .updatestocks-closebtn{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+            padding: 0;
+            margin: 0;
+            line-height: 1;  
+        }
+
+        .updatestocks-btn{
+            color: #666;
+        }
+
+        .updatestocks-body{
+            display: flex;
+            padding: 0;
+        }
+
+        .updatestocks-form-section{
+            flex: 1.5;
+            padding: 20px;
+        }
+
+        .updatestocks-form{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .updatestocks-formgroup{
+            margin-bottom: 15px;
+        }
+
+        .updatestocks-label{
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .updatestocks-txt, .updatestocks-input{
+            width: 100%;
+            max-width: 340px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+
+        .updatestocks-btn{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #updatestocks_addbtn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--normalbtn);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #updatestocks_addbtn{
+            background-color: var(--hoverbtn);
+        }
+
+        #updatestocks_backbtn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--aluminum);
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #updatestocks_backbtn{
+            background-color: var(--tableborder);
+        }
+    /*update stocks css-------------------------------------- */
+    .button-group {
+        display: flex;
+        justify-content: flex-end; /* Aligns buttons to the right */
+        gap: 10px; /* Small gap between buttons */
+        margin: 15px;
+    }
+
+    .action-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+   #add-stock {
+        background-color: var(--importanthl);
+        color: white;
+    }
+
+    #add-stock:hover {
+        background-color: var(--textnavlink);
+    }
+
+    #add-category {
+        background-color: var(--importanthl);
+        color: white;
+    }
+
+    #add-category:hover {
+        background-color: var(--textnavlink);
+    }
+
     </style>
 </head>
 <body>
@@ -615,7 +791,7 @@
                         <input type="text" placeholder="Enter Product's info to search">
                 </div>
 
-                <div class="page-header">
+                <div class="page-header">  
                     <h1 class="page-title">Inventory</h1>
                 </div>
 
@@ -646,12 +822,22 @@
                     </div>
                 </div>
 
-                <div class="add-button">
-                    <button id="add-category">
-                        <svg class="add-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-                        Add Categroy
-                    </button>
-                </div>
+                <!-- Replace your current add-stocks and add-button divs with this: -->
+                    <div class="button-group">
+                        <button id="add-stock" class="action-button">
+                            <svg class="add-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
+                            </svg>
+                            Add Stock
+                        </button>
+
+                        <button id="add-category" class="action-button">
+                            <svg class="add-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
+                            </svg>
+                            Add Category
+                        </button>
+                    </div>
 
                 <div class="tables-container">
 
@@ -702,28 +888,24 @@
                                         <th>ID</th>
                                         <th>Product Name</th>
                                         <th>Current Stocks</th>
-                                        <th>Stock-In Update</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($inventories as $inventory)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Helmet</td>
-                                        <td>3</td>
-                                        <td>May 11, 2025</td>
+                                        <td>{{ $inventory->inventory_id }}</td>
+                                        <td>{{ $inventory->product->product_name }}</td>
+                                        <td>{{ $inventory->stocks_quantity }}</td>
                                         <td>
                                             <div class="table-actions">
-                                                <button id="table-editaction-button" class="table-action-button">
+                                                <button id="stockstable-editaction-button" class="table-action-button">
                                                     <svg class="edit-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-                                                </button>
-
-                                                <button id="table-deleteaction-button" class="table-action-button">
-                                                    <svg class="delete-product-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -760,6 +942,42 @@
                 </div>
             </div>
         <!-- Add Category--------------------------------------------------------------->
+
+        <!-- Edit Stocks--------------------------------------------------------------->
+        <div class="updatestocks-modal" id="updateStocks_modal">
+            <div class="updatestocks-modal-content">
+                <div class="updatestocks-header">
+                    <h3 class="updatestocks-title">Update Product's Stocks</h3>
+                    <button class="updatestocks-closebtn" id="updatestocks_closebtn">&times;</button>
+                </div>
+
+                <div class="updatestocks-body">
+                    <div class="updatestocks-form-section">
+                        <form action="" class="updatestocks-form" id="updatestocks_form" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="updatestock-formgroup">
+                                 <div class="updatestocks-label">Product's Name:</div>
+                                 <input type="text" name="product_name" id="product_name" class="updatestocks-txt" disabled>
+                            </div>
+
+                            <div class="updatestock-formgroup">
+                                <div class="updatestocks-label">Update Stocks:</div>
+                                <input type="number" name="stocks_quantity" id="stocks_quantity" class="updatestocks-input" required>
+                            </div>
+
+                            <div class="updatestocks-btn">
+                                <button type="submit" id="updatestocks_addbtn">Update Stocks</button>
+                                <button type="button" id="updatestocks_backbtn">Back</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Edit Stocks--------------------------------------------------------------->
 
         <!--Edit Category--------------------------------------------------------------->
         <div class="editcategory-modal" id="editcategory_modal">
@@ -798,6 +1016,50 @@
     </main>
 
     <script src="{{ asset('js/scriptForTime.js') }}"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const updateStockModal = document.getElementById('updateStocks_modal');
+        const updateStockForm = document.getElementById('updatestocks_form');
+
+        document.querySelectorAll('#stockstable-editaction-button').forEach(button => {
+            button.addEventListener('click', async function(){
+                const row = this.closest('tr');
+                const inventoryId = row.querySelector('td:first-child').textContent;
+
+                try{
+                    const response = await fetch(`/TurboParts/Staff/inventories/${inventoryId}/edit`);
+                    const inventory = await response.json();
+
+                    document.getElementById('product_name').value = inventory.product.product_name;
+                    document.getElementById('stocks_quantity').value = inventory.stocks_quantity;
+                    updateStockForm.action = `/TurboParts/Staff/inventories/${inventoryId}`;
+                    updateStockModal.style.display = 'flex';
+                }  catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load inventory data');
+                }
+            });
+          
+       });
+
+       document.getElementById('updatestocks_closebtn').addEventListener('click', function() {
+        updateStockModal.style.display = 'none';
+        });
+
+        document.getElementById('updatestocks_backbtn').addEventListener('click', function() {
+            updateStockModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(e) {
+            if(e.target === updateStockModal) {
+                updateStockModal.style.display = 'none';
+            }
+        });
+
+    });
+    </script>
    
     <script>
         const modals = {

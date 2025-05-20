@@ -1,3 +1,7 @@
+@php
+    $posProducts = App\Models\Product::with('inventory')->get();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POS Receipt</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -60,7 +66,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-        .pos-container {
+        .container {
             display: flex;
             min-height: 100vh;
             padding: 20px;
@@ -324,6 +330,94 @@
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 1-4 columns depending on screen width */
             }
         }
+
+        .product-item button {
+        flex-direction: column;
+        padding: 10px;
+        }
+        
+        .product-item img {
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+        
+        .product-stock {
+            font-size: 12px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .no-image {
+            height: 120px;
+            width: 200px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .pos-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .product-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .receipt-section {
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .remove-item {
+            color: red;
+            cursor: pointer;
+        }
+       .out-of-stock {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .out-of-stock button {
+        pointer-events: none;
+        background-color: #ccc !important;
+    }
+
+    #cashAmount {
+        margin-top: 5px;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    #changeDisplay {
+        padding: 5px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        text-align: right;
+    }
+
     </style>
 </head>
 <body>
@@ -379,74 +473,53 @@
                         <input type="text" placeholder="Enter Product's info to search">                    
                     </div>
                     
-                    <div class="product-list" id="productList">
-                        <!-- Example of a product button -->
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Brake Pads', 120)">Brake Pads</button>
-                            <div class="product-price">₱120</div>
+                  <div class="product-list" id="productList">
+                        @foreach($posProducts as $product)
+                        <div class="product-item @if(($product->inventory->stocks_quantity ?? 0) <= 0) out-of-stock @endif">
+                            <button onclick="addToReceipt('{{ $product->product_id }}', '{{ $product->product_name }}', '{{ $product->product_price }}','{{ $product->inventory->stocks_quantity ?? 0 }}')">
+                                @if($product->product_image)
+                                    <img src="{{ asset('storage/' . $product->product_image) }}" 
+                                        alt="{{ $product->product_name }}" 
+                                        style="width: 50px; height: 50px; object-fit: cover; margin-bottom: 5px;">
+                                @else
+                                    <div class="no-image">No Image</div>
+                                @endif
+                                {{ $product->product_name }}
+                            </button>
+                            <div class="product-price">₱{{ number_format($product->product_price, 2) }}</div>
+                            <div class="product-stock">Stock: {{ $product->inventory->stocks_quantity ?? 0 }}</div>
                         </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Engine Oil', 250)">Engine Oil</button>
-                            <div class="product-price">₱250</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Spark Plug', 75)">Spark Plug</button>
-                            <div class="product-price">₱75</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Battery', 3200)">Battery</button>
-                            <div class="product-price">₱3,200</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Headlight Bulb', 300)">Headlight Bulb</button>
-                            <div class="product-price">₱300</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Windshield Wipers', 450)">Windshield Wipers</button>
-                            <div class="product-price">₱450</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Radiator Coolant', 150)">Radiator Coolant</button>
-                            <div class="product-price">₱150</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Fuel Filter', 200)">Fuel Filter</button>
-                            <div class="product-price">₱200</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Transmission Fluid', 500)">Transmission Fluid</button>
-                            <div class="product-price">₱500</div>
-                        </div>
-                        <div class="product-item">
-                            <button onclick="addToReceipt('Air Filter', 180)">Air Filter</button>
-                            <div class="product-price">₱180</div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-
                 <!-- Order Summary - Now on Right -->
                 <div class="receipt-section">
                     <div class="receipt-header">
                         <h3>Order Summary</h3>
-                        <div class="receipt-number">#0001</div>
                     </div>
-                    
+
                     <div class="receipt-items" id="receiptItems">
-                        <!-- Items will be added here dynamically -->
+                        <!-- Items will appear here -->
                     </div>
-                    
+
                     <div class="receipt-total">
                         <div>Total:</div>
                         <div class="total-amount">₱<span id="totalAmount">0.00</span></div>
                     </div>
 
-                    <!-- Payment Mode Dropdown -->
-                    <div class="receipt-actions">
-                        <select class="payment-dropdown" id="paymentMode">
-                            <option value="cash">Cash</option>
-                            <option value="credit-card">Credit Card</option>
-                            <option value="debit-card">Debit Card</option>
-                        </select>
+                    <div id="cashInputContainer" style="display: none; margin-top: 10px;">
+                        <label for="cashAmount">Amount Received:</label>
+                        <input type="number" id="cashAmount" class="payment-dropdown" placeholder="Enter cash amount" step="0.01" min="0">
+                        <div id="changeDisplay" style="margin-top: 5px; font-weight: bold;"></div>
+                    </div>
+
+                    <select class="payment-dropdown" id="paymentMode">
+                        <option value="credit_card">Credit Card</option>
+                        <option value="debit_card">Debit Card</option>
+                        <option value="cash">Cash</option>
+                    </select>
+
+                     <div class="receipt-actions">
                         <button class="btn btn-secondary" onclick="clearReceipt()">Clear</button>
                         <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
                     </div>
@@ -456,96 +529,179 @@
     </main>
 
 <script src="{{ asset('js/scriptForTime.js')}}"></script>
+
 <script>
-    let receipt = [];
-    let receiptNumber = 1;
-
-    function addToReceipt(name, price) {
-        // Check if item already exists in receipt
-        const existingItem = receipt.find(item => item.name === name);
-        if (existingItem) {
-            existingItem.quantity += 1;
-            existingItem.totalPrice = existingItem.quantity * existingItem.price;
+    document.getElementById('paymentMode').addEventListener('change', function() {
+        const cashInputContainer = document.getElementById('cashInputContainer');
+        if (this.value === 'cash') {
+            cashInputContainer.style.display = 'block';
         } else {
-            receipt.push({ 
-                name, 
-                price,
-                quantity: 1,
-                totalPrice: price
-            });
+            cashInputContainer.style.display = 'none';
         }
-        renderReceipt();
-    }
-
-    function removeFromReceipt(index) {
-        receipt.splice(index, 1);
-        renderReceipt();
-    }
-
-    function clearReceipt() {
-        if (receipt.length > 0 && confirm("Are you sure you want to clear the current order?")) {
-            receipt = [];
-            renderReceipt();
-        }
-    }
-
-    function processPayment() {
-        const paymentMode = document.getElementById("paymentMode").value;
-        if (receipt.length === 0) {
-            alert("Please add items to the receipt first");
-            return;
-        }
-        
-        // In a real app, this would connect to a payment processor
-        alert(`Payment processed for ₱${calculateTotal().toFixed(2)} via ${paymentMode}\nReceipt #${receiptNumber++}`);
-        receipt = [];
-        renderReceipt();
-    }
-
-    function calculateTotal() {
-        return receipt.reduce((sum, item) => sum + item.totalPrice, 0);
-    }
-
-    function renderReceipt() {
-        const container = document.getElementById("receiptItems");
-        const totalElem = document.getElementById("totalAmount");
-        container.innerHTML = "";
-        
-        if (receipt.length === 0) {
-            container.innerHTML = '<div style="text-align: center; color: #777; padding: 20px;">No items added</div>';
-            totalElem.innerText = "0.00";
-            return;
-        }
-
-        receipt.forEach((item, i) => {
-            const itemElement = document.createElement("div");
-            itemElement.className = "receipt-item";
-            itemElement.innerHTML = `
-                <div class="receipt-item-info">
-                    <div class="receipt-item-name">${item.name} × ${item.quantity}</div>
-                </div>
-                <div class="receipt-item-price">₱${item.totalPrice.toFixed(2)}</div>
-                <button class="receipt-item-remove" onclick="removeFromReceipt(${i})">×</button>
-            `;
-            container.appendChild(itemElement);
-        });
-
-        totalElem.innerText = calculateTotal().toFixed(2);
-    }
-
-    // Product search filter
-    document.getElementById("searchInput").addEventListener("input", function() {
-        const filter = this.value.toLowerCase();
-        const items = document.querySelectorAll(".product-item");
-        
-        items.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            item.style.display = text.includes(filter) ? "flex" : "none";
-        });
     });
 
-    // Initialize with empty receipt
-    renderReceipt();
+    document.getElementById('cashAmount').addEventListener('input', function() {
+        const total = parseFloat(document.getElementById('totalAmount').textContent);
+        const cashAmount = parseFloat(this.value) || 0;
+        const change = cashAmount - total;
+        
+        const changeDisplay = document.getElementById('changeDisplay');
+        if (change >= 0) {
+            changeDisplay.textContent = `Change: ₱${change.toFixed(2)}`;
+            changeDisplay.style.color = '#27ae60'; // Green color
+        } else {
+            changeDisplay.textContent = `Insufficient: ₱${Math.abs(change).toFixed(2)}`;
+            changeDisplay.style.color = '#e74c3c'; // Red color
+        }
+    });
+
+    let receiptItems = [];
+
+    function addToReceipt(productId, name, price, stock) {
+        if (stock <= 0) {
+            alert('This product is out of stock')
+            return;
+        }
+
+        const existingItem = receiptItems.find(item => item.productId === productId);
+
+        if (existingItem) {
+            if (existingItem.quantity >= stock) {
+                alert(`Only ${stock} items available in stock!`);
+                return;
+            }
+            existingItem.quantity++;
+            existingItem.total = existingItem.quantity * price;
+        }
+        else {
+            receiptItems.push({
+                productId: productId,
+                name: name,
+                price: parseFloat(price),
+                quantity: 1,
+                total: parseFloat(price)
+            });
+        }
+
+        updateReceiptDisplay();
+    }
+
+    function updateReceiptDisplay() {
+        const container = document.getElementById("receiptItems");
+        const totalElem = document.getElementById('totalAmount');
+        
+        container.innerHTML = "";
+
+        receiptItems.forEach((item, index) => {
+            const itemElement = document.createElement("div");
+            itemElement.className = "receipt-item"; 
+            itemElement.innerHTML = `
+                                    <div>${item.name} &times; ${item.quantity}</div>
+                                    <div>₱${item.total.toFixed(2)}</div>
+                                    <button onclick="removeItem(${index})">&times;</button>
+                                    `;
+                container.appendChild(itemElement);
+        });
+
+        const total = receiptItems.reduce((sum, item) => sum + item.total, 0);
+        totalElem.textContent = total.toFixed(2);
+    }
+
+
+    function removeItem(index){
+        const item = receiptItems[index];
+        item.quantity--;
+        item.total = item.quantity * item.price;
+
+        if(item.quantity <= 0){
+            receiptItems.splice(index, 1);
+        }
+
+        updateReceiptDisplay();
+    }
+
+    function clearReceipt(){
+        if (receiptItems.length > 0 && confirm('Clear the current order?')) {
+            receiptItems = [];
+            updateReceiptDisplay();
+        }
+    }
+
+   async function processPayment() {
+    const paymentMode = document.getElementById("paymentMode").value;
+    const cashAmount = paymentMode === 'cash' ? parseFloat(document.getElementById('cashAmount').value) : null;
+
+    if (receiptItems.length === 0) {
+        alert("Please add items to the receipt first");
+        return;
+    }
+
+    // Validate cash amount if payment is cash
+    if (paymentMode === 'cash') {
+        if (isNaN(cashAmount) || cashAmount <= 0) {
+            alert("Please enter a valid cash amount");
+            return;
+        }
+        
+        const total = parseFloat(document.getElementById('totalAmount').textContent);
+        if (cashAmount < total) {
+            alert("Cash amount is less than the total amount");
+            return;
+        }
+    }
+
+    const payButton = document.querySelector('.btn-primary');
+    payButton.disabled = true;
+    payButton.textContent = 'Processing...';
+
+    try {
+
+         const requestData = {
+            items: receiptItems,
+            payment_method: paymentMode
+        };
+
+        // Only add cash_amount if payment is cash
+        if (paymentMode === 'cash') {
+            data.cash_amount = cashAmount;
+        }
+
+        const response = await fetch('/cashier/process-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            throw new Error(`Server returned: ${text.substring(0, 100)}...`);
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Payment failed');
+        }
+
+        alert(`Order #${data.order_id} completed successfully!`);
+        receiptItems = [];
+        updateReceiptDisplay();
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Payment Error: ' + error.message);
+    } finally {
+        payButton.disabled = false;
+        payButton.textContent = 'Pay Now';
+    }
+}
+
 </script>
 
 </body>
